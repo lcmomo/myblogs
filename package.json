@@ -1,0 +1,50 @@
+{
+  "name": "myblogs",
+  "version": "1.0.0",
+  "description": "我的个人博客",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client:dev": "scripty",
+    "client:server": "scripty"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcmomo/myblogs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lcmomo/myblogs/issues"
+  },
+  "homepage": "https://github.com/lcmomo/myblogs#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.1.8",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.2.2",
+    "html-webpack-plugin": "^5.3.2",
+    "scripty": "^2.0.0",
+    "webpack": "^5.52.1",
+    "webpack-build-notifier": "^2.3.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.0",
+    "webpack-merge": "^5.8.0",
+    "yargs-parser": "^20.2.9"
+  },
+  "dependencies": {
+    "history": "^5.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.3"
+  }
+}

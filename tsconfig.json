@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "outDir": "/dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "react",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "esNext",
+  },
+  "include": [
+    "src"
+  ],
+  "lib": [
+    "es2015",
+    "es2016",
+    "dom"
+]
+}
