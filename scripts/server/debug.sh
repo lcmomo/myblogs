@@ -1,0 +1,1 @@
+nest start --debug --watch

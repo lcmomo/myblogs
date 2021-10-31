@@ -1,17 +1,68 @@
 
-const { join } = require('path');
-
+const { join, resolve } = require('path');
+const appPath = resolve('src/client');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const webpack = require('webpack');
 const webpackConfig = {
+  target:  "web",
   output: {
-    filename: 'app.js',
-    publicPath: '/dist'
+    filename: '[name].[hash:5].js',
+    // publicPath: './',
+  },
+
+  module: {
+    rules: [
+      //   // 把这个配置放在所有loader之前
+      // {
+      //   enforce: 'pre',
+      //   test: /\.tsx?$/,
+      //   exclude: /node_modules/,
+      //   // include: [appPath],
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     emitWarning: true, // 这个配置需要打开，才能在控制台输出warning信息
+      //     emitError: true, // 这个配置需要打开，才能在控制台输出error信息
+      //     fix: false // 是否自动修复，如果是，每次保存时会自动修复可以修复的部分
+      //   }
+      // },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        include: [`${appPath}/assets`],
+        exclude: /node_modules/,
+        loader: 'file-loader',
+        options: {
+          publicPath: 'assets/img',
+          name: '[name].[hash:5].[ext]'
+        },
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        include: [`${appPath}/assets`],
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: '@svgr/webpack',
+            options: {
+              babel: false,
+              icon: true,
+              name: '[name].[hash:5].[ext]'
+            }
+          }
+        ]
+      }
+    ]
   },
   devServer: {
     historyApiFallback: true,
-    static: {
-      directory: join(__dirname, '../dist'),
-    },
+    // static: {
+    //   directory: join(__dirname, '../dist')
+    // },
+    contentBase: join(__dirname, "../dist"),
     // open: {
     //   target: ['/dist/index.html'],
     // },
@@ -40,7 +91,12 @@ const webpackConfig = {
       title: 'My Webpack Build',
       // logo: "",
       suppressSuccess: true
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static'
     })
+    // new webpack.HotModuleReplacementPlugin()
   ]
 }
 

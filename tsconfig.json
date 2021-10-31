@@ -1,17 +1,26 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "outDir": "/dist/",
-    "sourceMap": true,
+    "outDir": "./dist/client",
+    "sourceMap": false,
     "noImplicitAny": true,
     "jsx": "react",
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "esNext",
+    "declaration": false,
+    "removeComments": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/client/*"],
+      "@/com": ["src/client/pages/components"]
+    },
   },
   "include": [
-    "src"
+    "src/client",
+    "src/client/typings/img.d.ts"
   ],
   "lib": [
     "es2015",
