@@ -1,1 +1,1 @@
-node dist/server/main
+node dist_server/main

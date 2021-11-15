@@ -2,7 +2,7 @@
 const { join, resolve } = require('path');
 const appPath = resolve('src/client');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const webpack = require('webpack');
 const webpackConfig = {
   target:  "web",
@@ -92,10 +92,10 @@ const webpackConfig = {
       // logo: "",
       suppressSuccess: true
     }),
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-      analyzerMode: 'static'
-    })
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: false,
+    //   analyzerMode: 'static'
+    // })
     // new webpack.HotModuleReplacementPlugin()
   ]
 }

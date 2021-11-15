@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../Avatar/sty.less';
+import '../my_avatar/style.less';
 import { Avatar, Popover, Typography } from 'antd';
 import Href from '../Href';
 

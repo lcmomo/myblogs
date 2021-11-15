@@ -13,12 +13,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // const DashboardPlugin = require('webpack-dashboard/plugin');
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const appPath = resolve('src/client');
 
 const webpackConfig = {
   entry: {
     app: resolve('./src/client/index.tsx'),
-    vendor: ['react', 'react-dom'] // 不变的代码分包
+    // vendor: ['react', 'react-dom'] // 不变的代码分包
   },
   resolve: {
     alias: {
@@ -74,6 +76,10 @@ const webpackConfig = {
       template:"src/client/index.html"
     }),
     new ProgressBarPlugin(),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static'
+    })
     // new DashboardPlugin(),
   ]
 }

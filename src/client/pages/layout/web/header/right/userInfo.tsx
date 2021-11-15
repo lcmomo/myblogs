@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dropdown, Menu } from 'antd';
 
 import { Avatar, Popover, Typography } from 'antd';
 import MyAvatar from '@/pages/components/my_avatar';
+import useBus from '@/hooks/usebus';
+import SignModal from '@/pages/components/signmodal';
+import {selectUser} from '@/store/slice/user';
+import { RootState } from '@/store';
 // import { DISCUSS_AVATAR } from '@/config';
 
 // import { userInfoProp } from '@/type';
@@ -16,15 +20,30 @@ const { Text } = Typography;
 //   role: number,
 // }
 function UserInfo(props: any) {
-  // const dispatch = useDispatch()
-  // const bus = useBus()
-  // const userInfo = useSelector(state => state.user)
-  const userInfo = {
-    username: '2',
-    github: '',
-    role: 1
-  }
+  const dispatch = useDispatch();
+  const bus = useBus();
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  console.log("userINfo: ", userInfo);
+  // const userInfo = {
+  //   username: '',
+  //   github: '',
+  //   role: 2
+  // }
   const { username, github, role } = userInfo;
+
+  const loginCall = useCallback(
+    () => {
+      bus.emit('openSignModal', 'login');
+    },
+    [],
+  );
+
+  const registerCall = useCallback(
+    () => {
+      bus.emit('openSignModal', 'register');
+    },
+    [],
+  )
 
   const MenuOverLay = (
     <Menu>
@@ -61,14 +80,15 @@ function UserInfo(props: any) {
               type='primary'
               size='small'
               style={{ marginRight: 20 }}
-              onClick={e => console.log("login")}>
+              onClick={ loginCall}>
               登录
             </Button>
-            <Button ghost danger size='small' onClick={e => console.log('register')}>
+            <Button ghost danger size='small' onClick={registerCall}>
               注册
             </Button>
           </>
         )}
+        <SignModal />
     </div>
   )
 }

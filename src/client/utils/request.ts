@@ -1,7 +1,8 @@
 import * as fetch from 'isomorphic-fetch';
+import { API_BASE_URL } from '@/config';
 
 const getToken = () => 't';
-const baseUrl: string =  'api';
+const baseUrl: string = API_BASE_URL;
 
 function parseJSON(response: any) {
   return response.json();
@@ -34,7 +35,7 @@ export interface ResponseProps {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url: string, options: requestOptionsType) {
+export default async function request(url: string, options: requestOptionsType): Promise<any> {
   //console.log(options.body instanceof FormData);
  
   const newOptions = {  ...options };
@@ -65,9 +66,13 @@ export default function request(url: string, options: requestOptionsType) {
     ...newOptions.headers
   }
 
-  return fetch(`${baseUrl}${url}`, newOptions)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((data: ResponseProps) => ({ data }))
-    .catch(err => ({ err }));
+  try {
+    const response = await fetch(`${baseUrl}${url}`, newOptions);
+    const response_1 = await checkStatus(response);
+    const data = await parseJSON(response_1);
+    console.log('data: ', data)
+    return ({ data });
+  } catch (err) {
+    return ({ err });
+  }
 }
