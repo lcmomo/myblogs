@@ -1,1 +1,0 @@
-node dist_server/main
