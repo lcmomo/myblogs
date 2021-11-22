@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmyblogs_client=self.webpackChunkmyblogs_client||[]).push([[424],{2424:(e,l,n)=>{n.r(l),n.d(l,{default:()=>t});var s=n(7294);const t=()=>(console.log("enter"),s.createElement("div",null,"Home2"))}}]);
