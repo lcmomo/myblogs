@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { HEADER_BLOG_NAME } from '../../../../../config';
-import MyIcon from '../../../../components/Icon';
+import MyIcon from '../../../../components/my_icon';
 
 
 const HeaderLeft: FC = (props) => {

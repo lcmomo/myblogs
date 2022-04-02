@@ -29,7 +29,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], AppController.prototype, "getHello", null);
 AppController = __decorate([
-    (0, common_1.Controller)('/user'),
+    (0, common_1.Controller)('/use'),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 exports.AppController = AppController;

@@ -62,6 +62,36 @@ const webpackConfig = {
           // [sass-loader](/loaders/sass-loader)
           { loader: 'less-loader' }
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        include: [`${appPath}/assets`],
+        exclude: /node_modules/,
+        loader: 'file-loader',
+        options: {
+          publicPath: 'assets/img',
+          outputPath: 'assets/img',
+          name: '[name].[hash:5].[ext]'
+        },
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        include: [`${appPath}/assets`],
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: '@svgr/webpack',
+            options: {
+              babel: false,
+              icon: true,
+              name: '[name].[hash:5].[ext]'
+            }
+          }
+        ]
       }
     ]
   },

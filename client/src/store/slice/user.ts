@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../index';
-import { loginI } from '@/services/user';
+import { loginI, registerI } from '@/services/user';
+import { save, get, remove } from '@/utils/storage';
 
-interface UserInfo {
+export interface UserInfo {
   username: string;
   role: number;
   userId: number;
@@ -10,7 +11,7 @@ interface UserInfo {
 }
 interface UserState {
   userInfo: UserInfo
-  
+
 }
 
 export type LoginInfo = {
@@ -18,13 +19,21 @@ export type LoginInfo = {
   password: string;
 }
 
+export type RegisterInfo = {
+  username: string;
+  password: string;
+  email: string;
+}
+
+const userInfo = get('userInfo');
+const defaultUserInfo = {
+  username: '',
+  role: 2,
+  userId: 0,
+  github: ''
+}
 const initState: UserState = {
-  userInfo: {
-    username: '',
-    role: 2,
-    userId: 0,
-    github: null
-  }
+  userInfo: userInfo || defaultUserInfo
 
 }
 
@@ -33,7 +42,6 @@ export const userSlice = createSlice({
   initialState: initState,
   reducers: {
     setUserInfo: (state: UserState, action: PayloadAction<UserInfo>) => {
-      console.log('enter setUser')
       state.userInfo = action.payload;
     }
   }
@@ -45,11 +53,35 @@ export const {
 
 
 export const login = (loginInfo: LoginInfo) => async (dispatch: AppDispatch) => {
-  const res = await loginI(loginInfo);
-  console.log("resU: ", res.data)
-  dispatch(setUserInfo(res.data));
+
+  try {
+    const data = await loginI(loginInfo);
+    if (data) {
+      save('userInfo', data);
+      dispatch(setUserInfo(data));
+    }
+  } catch(err) {
+    throw err;
+  }
 };
 
-export const selectUser = (state: RootState) => state.user;
+export const logout = () => (dispatch: AppDispatch) => {
+  remove('userInfo');
+  dispatch(setUserInfo({ username: '', userId: 0, role: 2, github: null }))
+}
+
+export const register = (registerInfo: RegisterInfo) => async (dispatch: AppDispatch) => {
+  try {
+    const data = await registerI(registerInfo);
+    if (data) {
+      save('userInfo', data);
+      dispatch(setUserInfo(data));
+    }
+  } finally {
+
+  }
+}
+
+export const selectorUser = (state: RootState) => state.user.userInfo;
 
 export default userSlice.reducer;
