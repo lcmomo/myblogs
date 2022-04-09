@@ -1,7 +1,7 @@
 
 import { UserDto, UserQueryParams } from '../models/dto/user';
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../database/models/user';
+import { User, Comment, Reply } from '../database/models';
 import {  ResultGenerator } from '../core/result_generator';
 import { createToken } from '../utils/token';
 import { Op } from 'sequelize';
@@ -9,16 +9,20 @@ import { Op } from 'sequelize';
 const { or, not, between, like } = Op;
 @Injectable()
 export class UserService {
-  constructor(@Inject('User') private readonly UserModel: typeof User){}
+  constructor(
+    @Inject('User') private readonly userModel: typeof User,
+    @Inject('Comment') private readonly commentModel: typeof Comment,
+    @Inject('Reply') private readonly replyModel: typeof Reply
+  ){}
   async findAll() {
-    return  await this.UserModel.findAll({
+    return  await this.userModel.findAll({
     })
   }
 
   async defaultLogin(user: UserDto) {
     try {
       const { account, password } = user;
-      const currentUser = await this.UserModel.findOne({
+      const currentUser = await this.userModel.findOne({
         where: {
           // email: account,
           [or]: {
@@ -50,7 +54,7 @@ export class UserService {
   async register(user: UserDto) {
     try {
      const { username, password, email} = user;
-     const result = await this.UserModel.findOne({
+     const result = await this.userModel.findOne({
        where: {
          email
        }
@@ -58,13 +62,13 @@ export class UserService {
      if (result) {
        return ResultGenerator.genFailResult(403, '邮箱已被注册');
      } else {
-       const user = await this.UserModel.findOne({
+       const user = await this.userModel.findOne({
          where: { username }
        });
        if (user && !user.github) {
          return ResultGenerator.genFailResult(403, '用户名已被占用');
        } else {
-         await this.UserModel.create({username, password, email});
+         await this.userModel.create({username, password, email});
          return ResultGenerator.genSuccessResult(null, '注册成功');
        }
      }
@@ -93,7 +97,7 @@ export class UserService {
         where.createdAt = { [between]: rangeDate}
       }
 
-      const result = await this.UserModel.findAndCountAll({
+      const result = await this.userModel.findAndCountAll({
         where,
         offset: (page - 1) * pageSize,
         limit: parseInt(pageSize as unknown as string),
@@ -109,5 +113,15 @@ export class UserService {
 
  async  delete(userId: number) {
   //  6
+  try {
+    // 删除用户的同时会删除评论和回复
+    await this.replyModel.destroy({ where: { userId } });
+    await this.commentModel.destroy({ where: { userId }});
+    await this.userModel.destroy({ where: { id: userId }});
+    return ResultGenerator.genSuccessResult(null, '操作成功');
+  } catch(e) {
+    return ResultGenerator.genFailResult(500, '服务端错误');
+  }
+
  }
 }

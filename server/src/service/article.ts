@@ -18,7 +18,7 @@ const {
 @Injectable()
 export class ArticleService {
 
-  constructor(@Inject('Article') private readonly ArticleModel: typeof Article){}
+  constructor(@Inject('Article') private readonly articleModel: typeof Article){}
   async getAll(queryParams: ArticleListQueryParams) {
 
     const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order } = queryParams;
@@ -29,7 +29,7 @@ export class ArticleService {
       articleOrder = [order.split(' ')] as Order;
     }
     try {
-      const articleList =  await this.ArticleModel.findAndCountAll({
+      const articleList =  await this.articleModel.findAndCountAll({
         where: {
           id: { [not]: -1 }, // 过滤关于页面副本
           [or]: {
@@ -71,7 +71,7 @@ export class ArticleService {
   }
   async getById(params: ArticleListQueryParams) {
     const { id, type } = params;
-    const data = await this.ArticleModel.findOne({
+    const data = await this.articleModel.findOne({
       where: {
         id: params.id
       },
@@ -95,7 +95,7 @@ export class ArticleService {
       // ],
       // row: true
     });
-    type === 1 && this.ArticleModel.update({viewCount: ++data.viewCount}, {where: {id}});
+    type === 1 && this.articleModel.update({viewCount: ++data.viewCount}, {where: {id}});
 
     data.comments.forEach(comment => {
       comment.user.github = JSON.parse(comment.user.github)

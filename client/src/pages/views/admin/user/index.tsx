@@ -63,8 +63,10 @@ const AdminUser: FC<{}> = () => {
         title: '操作',
         render: (userId: number, record: any) => (
           <Popconfirm
-            title='Are you sure？'
-            onConfirm={e => updateList(() => request(`/user/${userId}`))}>
+            title='确认删除吗？'
+            okText="确认"
+            cancelText="取消"
+            onConfirm={e => updateList(() => request(`/user/${userId}`, {method: 'DELETE'}, {showMessage: true}))}>
             <a className='delete-text'>删除</a>
           </Popconfirm>
         )
