@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
-import { navList } from '../navList';
-import MyIcon from '@/pages/components/Icon';
+import { navList } from '../nav_list';
+import MyIcon from '@/pages/components/my_icon';
 const NavBar = (props: any) => {
   const location = useLocation();
   const {mode = 'horizontal'} = props;

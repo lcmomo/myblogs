@@ -68,7 +68,11 @@ const webpackConfig = {
           maxInitialRequests: 5,
           minSize: 0,
           name: 'common'
-        }
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
       }
     },
     runtimeChunk: {

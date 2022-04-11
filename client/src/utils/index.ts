@@ -20,3 +20,10 @@ export function isExternal(path: string): boolean {
   return /^(https?:|mailto:|tel:|http:)/.test(path);
 }
 
+export function calcCommentsCount (commentList: Array<any>): number {
+  let count = commentList.length;
+  commentList.forEach(item => {
+    count += item?.replies?.length || 0;
+  });
+  return count;
+}

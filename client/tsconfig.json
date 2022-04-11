@@ -3,7 +3,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "outDir": "dist",
+    "outDir": "./dist/client",
     "sourceMap": false,
     "noImplicitAny": true,
     "jsx": "react",
@@ -14,13 +14,16 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./src/*"],
       "@/comp": ["./pages/components"]
     },
     "types": ["node"]
   },
   "include": [
-    "src"
+    "src",
+    "./types/img.d.ts"
+    // ".",
+    // "/client/config/client/webpack.config.js"
   ],
   "lib": [
     "es2015",
