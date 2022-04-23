@@ -47,7 +47,7 @@ const Article: FC<{}> = (props: any) => {
 
   useEffect(() => {
     if (typeof withLoading === 'function') {
-      withLoading(request(`/article/${props.match.params.id}`)).then(res => {
+      withLoading(request(`/article/${props.match.params.id}`, { params: { type: 1}})).then(res => {
 
         res.content = translateMarkdown(res.content);
         setArticle(res);

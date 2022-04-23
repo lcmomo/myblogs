@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../index';
 
-interface ArticleInfo {
+export interface ArticleInfo {
 }
-interface TagInfo {
+export interface TagInfo {
   name: string;
   count: number,
   color?: string

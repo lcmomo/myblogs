@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import React from 'react';
 
 import {
   // HashRouter as Router,
@@ -17,7 +17,10 @@ const webHome = lazy(() => import('./pages/views/web/home'));
 const Article = lazy(() => import('./pages/views/web/article'));
 const About = lazy(() => import('./pages/views/web/about'));
 const AdminLayout = lazy(() => import('./pages/layout/admin'));
-const AdminUser = lazy(() => import('./pages/views/admin/user'))
+const AdminUser = lazy(() => import('./pages/views/admin/user'));
+const AdminArticleList = lazy(() => import('./pages/views/admin/article/list'));
+const AdminHome = lazy(() => import('./pages/views/admin/home'));
+const AdminArticleEdit = lazy(() => import('./pages/views/admin/article/edit'));
 const routeConfig: RouteProps[] = [
   {
     path: '/test',
@@ -34,7 +37,28 @@ const routeConfig: RouteProps[] = [
         path: '/admin/user',
         exact: true,
         component: AdminUser
-      }
+      },
+      {
+        path: '/admin/article/list',
+        exact: true,
+        component: AdminArticleList
+      },
+      {
+        path: '/admin/article/edit/:id',
+        exact: false,
+        component: AdminArticleEdit
+      },
+      {
+        path: '/admin/article/add',
+        exact: false,
+        component: AdminArticleEdit
+      },
+      // {
+      //   path: '',
+      //   exact: true,
+      //   component: AdminHome
+
+      // },
     ]
   },
 
@@ -70,21 +94,6 @@ const Routes = () => {
   return (
   <Suspense fallback={<div>loading...</div>}>
     <Router history={history}>
-      {/* <Switch>
-      {
-        routeConfig.map(r => {
-          const { path, exact, component, children } = r;
-          // if(children && children.length) {
-          //   children.map(item => {
-          //     return 
-          //   })
-          // }
-            return (
-              <Route exact={ exact } path={ path } component={component} key = { `${path}` } />
-            )
-          })
-      }
-    </Switch> */}
     {createRoute(routeConfig)}
   </Router>
   </Suspense>

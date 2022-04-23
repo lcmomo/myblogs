@@ -12,7 +12,7 @@ class Tag extends Model {
     primaryKey: true,
     autoIncrement: true
   })
-  id: number;
+  id!: number;
 
 
   @Column({
@@ -20,32 +20,32 @@ class Tag extends Model {
     allowNull: false,
     comment: '标签名称'
   })
-  name: string;
+  name!: string;
 
   @ForeignKey(() => Article)
   @Column({
     type: DataType.INTEGER({ length: 11}),
   })
-  articleId: number;
+  articleId!: number;
 
-  @Column({
-    type: DataType.DATE,
-    defaultValue: DataType.NOW,
-    get() {
-      const _this = this;
-      // console.log("di:      ", this.getDataValue('createdAt'))
-      return dayjs(_this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
-    }
-  })
-  createdAt?: string;
-  @Column({
-    type: DataType.DATE,
-    defaultValue: DataType.NOW,
-    get() {
-      return dayjs(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss')
-    }
-  })
-  updatedAt?: string;
+  // @Column({
+  //   type: DataType.DATE,
+  //   defaultValue: DataType.NOW,
+  //   get() {
+  //     const _this = this;
+  //     // console.log("di:      ", this.getDataValue('createdAt'))
+  //     return dayjs(_this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
+  //   }
+  // })
+  // createdAt?: string;
+  // @Column({
+  //   type: DataType.DATE,
+  //   defaultValue: DataType.NOW,
+  //   get() {
+  //     return dayjs(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss')
+  //   }
+  // })
+  // updatedAt?: string;
 
 
 

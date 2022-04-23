@@ -15,20 +15,20 @@ class Comment extends Model {
     primaryKey: true,
     autoIncrement: true
   })
-  id: number;
+  id!: number;
 
   @ForeignKey(() => Article)
   @Column({
     type: DataType.INTEGER({ length: 11}),
   })
-  articleId: number;
+  articleId!: number;
 
   @Column({
     type: DataType.TEXT,
     allowNull: false,
     comment: '评论内容'
   })
-  content: string;
+  content!: string;
 
 
 
@@ -55,28 +55,28 @@ class Comment extends Model {
   @Column(
     DataType.INTEGER({length: 11}),
   )
-  userId: number;
+  userId!: number;
 
   @BelongsTo(() =>Article, {
     foreignKey: 'articleId',
     targetKey: 'id',
     constraints: true,
   })
-  article: Article;
+  article!: Article;
 
   @BelongsTo(() => User, {
     foreignKey: 'userId',
     targetKey: 'id',
     constraints: true,
   })
-  user: User;
+  user!: User;
   
   @HasMany(() => Reply, {
     foreignKey: 'commentId',
     sourceKey: 'id',
     constraints: false
   })
-  replies: Reply[];
+  replies!: Reply[];
 }
 
 

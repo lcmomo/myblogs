@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Article } from '../database/models/article';
 import {  ResultGenerator } from '../core/result_generator';
 import { createToken } from '../utils/token';
-import { ArticleListQueryParams } from '@/models/dto/article';
+import { ArticleAddBody, ArticleListQueryParams } from '@/models/dto/article';
 import { Op } from 'sequelize';
 import { Order } from 'sequelize/types/lib/model';
 import { Comment, Reply, Tag, User } from '@/database/models';
@@ -21,9 +21,8 @@ export class ArticleService {
   constructor(@Inject('Article') private readonly articleModel: typeof Article){}
   async getAll(queryParams: ArticleListQueryParams) {
 
-    const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order } = queryParams;
-    const tagFilter = tag ? { name: tag } : null;
-    const categoryFilter = category ? { name: category } : null;
+    const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, order } = queryParams;
+    const tagFilter = tag ? { name: tag } : {};
     let articleOrder: Order = [['createdAt', 'DESC']];
     if (order) {
       articleOrder = [order.split(' ')] as Order;
@@ -57,8 +56,8 @@ export class ArticleService {
         distinct: true // count 计算
       });
       if (preview === 1) {
-        articleList.rows.forEach(d => {
-            d.content = d.content.slice(0, 1000) // 只是预览，减少大量的数据传输
+        articleList.rows.forEach((d: Article) => {
+            d.content = d.content && d.content.slice(0, 1000) // 只是预览，减少大量的数据传输
         });
     }
 
@@ -69,9 +68,10 @@ export class ArticleService {
       return ResultGenerator.genFailResult(500, '服务端错误')
     }
   }
-  async getById(params: ArticleListQueryParams) {
-    const { id, type } = params;
-    const data = await this.articleModel.findOne({
+  async getById(params: ArticleListQueryParams, query: ArticleListQueryParams) {
+    const { id } = params;
+    const { type } = query;
+    const data: Article | null = await this.articleModel.findOne({
       where: {
         id: params.id
       },
@@ -95,14 +95,33 @@ export class ArticleService {
       // ],
       // row: true
     });
-    type === 1 && this.articleModel.update({viewCount: ++data.viewCount}, {where: {id}});
-
-    data.comments.forEach(comment => {
-      comment.user.github = JSON.parse(comment.user.github)
-      comment.replies.forEach(reply => {
-        reply.user.github = JSON.parse(reply.user.github)
-      })
-    });
+    if (data) {
+      Number(type) === 1 &&  (await this.articleModel.update({viewCount: ++data.viewCount}, {where: {id}})); // 查看文章详情，则浏览数+1
+      data.comments.forEach(comment => {
+        if (comment.user.github){
+          comment.user.github = JSON.parse(comment.user.github);
+        }
+        comment.replies && comment.replies.forEach(reply => {
+          if (reply && reply.user && reply.user.github) {
+            reply.user.github = JSON.parse(reply.user.github);
+          }
+        });
+      });
+    }
     return ResultGenerator.genSuccessResult(data, 'SUCCESS')
+  }
+
+  async add(article: ArticleAddBody) {
+    const { title, content, tagList = [], authorId } = article;
+    const result = await this.articleModel.findOne({ where: { title }});
+    if (result) {
+      return ResultGenerator.genFailResult(403, '文章已存在，创建失败');
+    } else {
+      const tags = tagList.map(t => ({ name: t }));
+      const data = await this.articleModel.create({
+       title, content, authorId, tags
+      }, { include: [Tag]});
+      return ResultGenerator.genSuccessResult(data, '创建成功！')
+    }
   }
 }

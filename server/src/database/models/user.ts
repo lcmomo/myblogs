@@ -15,42 +15,42 @@ class User extends Model {
     primaryKey: true,
     autoIncrement: true
   })
-  id: number;
+  id!: number;
 
   @Column({
     type: DataType.STRING(50),
     allowNull: false
   })
-  username: string;
+  username!: string;
 
   @Column({
     type: DataType.STRING,
     comment: '通过bcrypt 加密后的密码'
   })
-  password: string;
+  password!: string;
 
   @Column({
     type: DataType.STRING(50)
   })
-  email: string;
+  email!: string;
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true
   })
-  notice?: string;
+  notice!: string;
 
   @Column({
     type: DataType.TINYINT,
     defaultValue: 2,
     comment: '用户权限： 1 - admin，2， 普通用户'
   })
-  role: number;
+  role!: number;
 
   @Column({
     type: DataType.TEXT // github 登录用户，直接绑定user表
   })
-  github?: string;
+  github!: string;
 
   @Column({
     type: DataType.DATE,
@@ -76,10 +76,10 @@ class User extends Model {
   @HasMany(() => Comment, {
     foreignKey: 'userId'
   })
-  comments: Comment[];
+  comments!: Comment[];
   
   @HasMany(() => Reply)
-  replys: Reply[]
+  replys!: Reply[]
 }
 
 
