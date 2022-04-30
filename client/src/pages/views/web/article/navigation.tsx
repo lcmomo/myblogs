@@ -32,10 +32,11 @@ function getAnchorList(str: string, pathname: string) {
     }
   }
   str.replace(pattern, ($0?: string, $1?: string): any => {
+    console.log('reg: ', $0)
     const title = $0.replace(/.*?>/, '');
-    const startIndex = $0.indexOf('"');
-    const endIndex = $0.indexOf('">');
-    const href = `#${pathname}#${$0.slice(startIndex + 1, endIndex)}`;
+    const startIndex = $0.indexOf('>');
+    const endIndex = $0.indexOf('>');
+    const href = `#${pathname}#${title}`;
     const currentItem: AnchorItem = {
       tag: $1, // 标签类型
       title,

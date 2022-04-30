@@ -40,7 +40,8 @@ const Article: FC<{}> = (props: any) => {
   useEffect(() => {
     setTimeout(() =>{
       const hash = decodeURI(props.location.hash);
-      const elem = document.querySelector(`a[href='${hash}'`)  as HTMLElement;
+      const pathname = props.location.pathname;
+      const elem = document.querySelector(`a[href='#${pathname}#${hash}'`)  as HTMLElement;
       elem && hash && elem.click() // 挂载时路由跳转到指定位置
     }, 500)
   }, [props.match.params.id]);

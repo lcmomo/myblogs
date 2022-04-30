@@ -12,7 +12,8 @@ export interface ArticleListQueryParams {
 
 export interface ArticleAddBody {
   content: string,
-  tagList?: Array<string>,
   authorId: number,
-  title: string
+  title: string,
+  articleId?: number,
+  tags?: Array<Record<string, unknown>>,
 }

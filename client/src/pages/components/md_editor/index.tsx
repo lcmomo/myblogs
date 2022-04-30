@@ -3,7 +3,11 @@ import '@/styles/wang_editor.css' // 引入 css
 import React, { useState, useEffect } from 'react'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig } from '@wangeditor/editor'
+import { Boot } from '@wangeditor/editor'
+import markdownModule from '@wangeditor/plugin-md'
 
+
+Boot.registerModule(markdownModule);
 function MyEditor(props: any) {
     const [editor, setEditor] = useState<IDomEditor | null>(null); // 存储 editor 实例
     const [html, setHtml] = useState(''); // 编辑器内容

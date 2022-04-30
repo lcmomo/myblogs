@@ -94,7 +94,7 @@ const Routes = () => {
   return (
   <Suspense fallback={<div>loading...</div>}>
     <Router history={history}>
-    {createRoute(routeConfig)}
+      {createRoute(routeConfig)}
   </Router>
   </Suspense>
 )};

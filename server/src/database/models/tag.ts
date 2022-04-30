@@ -49,12 +49,12 @@ class Tag extends Model {
 
 
 
-  // @BelongsTo(() => Article, {
-  //   foreignKey: 'articleId',
-  //   targetKey: 'id',
-  //     constraints: false
-  // })
-  // article: Article;
+  @BelongsTo(() => Article, {
+    foreignKey: 'articleId',
+    targetKey: 'id',
+      constraints: false
+  })
+  article!: Article;
 }
 
 export { Tag };

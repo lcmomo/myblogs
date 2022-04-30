@@ -18,11 +18,13 @@ const {
 @Injectable()
 export class ArticleService {
 
-  constructor(@Inject('Article') private readonly articleModel: typeof Article){}
+  constructor(@Inject('Article') private readonly articleModel: typeof Article,
+    @Inject('Tag') private readonly tagModel: typeof Tag
+  ){}
   async getAll(queryParams: ArticleListQueryParams) {
 
     const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, order } = queryParams;
-    const tagFilter = tag ? { name: tag } : {};
+    const tagFilter = tag ? { name: tag } : undefined;
     let articleOrder: Order = [['createdAt', 'DESC']];
     if (order) {
       articleOrder = [order.split(' ')] as Order;
@@ -112,16 +114,42 @@ export class ArticleService {
   }
 
   async add(article: ArticleAddBody) {
-    const { title, content, tagList = [], authorId } = article;
-    const result = await this.articleModel.findOne({ where: { title }});
-    if (result) {
-      return ResultGenerator.genFailResult(403, '文章已存在，创建失败');
-    } else {
-      const tags = tagList.map(t => ({ name: t }));
-      const data = await this.articleModel.create({
-       title, content, authorId, tags
-      }, { include: [Tag]});
-      return ResultGenerator.genSuccessResult(data, '创建成功！')
+    try {
+      let { title, content, tags = [], authorId } = article;
+      const result = await this.articleModel.findOne({ where: { title }});
+      if (result) {
+        return ResultGenerator.genFailResult(403, '文章已存在，创建失败');
+      } else {
+        tags = tags.map(t => ({ name: t }));
+        const data = await this.articleModel.create({
+        title, content, authorId, tags
+        }, { include: [Tag]});
+        return ResultGenerator.genSuccessResult(data, '创建成功！')
+      }
+    } catch(e) {
+      console.log('e: ', e)
+      return ResultGenerator.genFailResult(500, '服务端错误');
+    }
+  }
+  async update(article: ArticleAddBody) {
+    try {
+      const { title, content, tags = [], articleId } = article;
+      const tagList = tags.map(t => ({ name: t, articleId }));
+      const result = await this.articleModel.update({title, content}, { where: { id: articleId }});
+      await this.tagModel.destroy({where: { articleId }});
+      await this.tagModel.bulkCreate(tagList);
+      return ResultGenerator.genSuccessResult(200, '更新成功')
+    } catch (e) {
+      return ResultGenerator.genFailResult(500, '服务端错误');
+    }
+  }
+
+  async delete(id: number) {
+    try {
+      await this.articleModel.destroy({ where: { id }});
+      return ResultGenerator.genSuccessResult(null, '删除成功');
+    } catch(e) {
+      return ResultGenerator.genFailResult(500, '服务端错误');
     }
   }
 }

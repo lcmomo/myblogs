@@ -2064,6 +2064,11 @@
   resolved "https://registry.npmmirror.com/@wangeditor/list-module/-/list-module-1.0.1.tgz#c8e9ffa336c363856c247168b7bc315976c294cc"
   integrity sha512-hlVwoXCK01eMqwwbZpSAjwHYDeZJei6mvPddcHkT5xws6r4wlT+8Xv3iBiAuutfdPbJTlXBRIWmNDFqN5aRtQg==
 
+"@wangeditor/plugin-md@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/@wangeditor/plugin-md/-/plugin-md-1.0.0.tgz#8bbd604a54af2ab98c3d334135fcaa98095e3398"
+  integrity sha512-wpbusrhSNmb6keC5vmiaQ2nBBfiwwVWmfRp+zNB65nGrPHVRjaFQBNxTpGoL+rc02KCYdflzEbZAg+kzGtMXlQ==
+
 "@wangeditor/table-module@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmmirror.com/@wangeditor/table-module/-/table-module-1.0.1.tgz#c015cf4bf885c2355cd5c2bc5994cc538e64c936"
