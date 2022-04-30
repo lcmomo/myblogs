@@ -6,7 +6,7 @@ import request from "@/utils/request";
 import Popconfirm from "antd/lib/popconfirm";
 import Table from "antd/lib/table/Table";
 import Tag from "antd/lib/tag";
-import { Button, Form, Input, Select, Switch } from 'antd';
+import { Button, Form, Input, message, Select, Switch } from 'antd';
 import React, { FC, useState } from "react"
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -72,13 +72,15 @@ const ArticleList: FC<ArticleListProps> = (props: ArticleListProps) => {
                 <Link to={`/article/${articleId}`}>查看</Link>
               </li>
               <li>
-                <Link to={{ pathname: `/admin/article/edit/${record.id}`, state: { articleId } }}>编辑</Link>
+                <Link to={{ pathname: `/admin/article/edit/${record.id}` }}>编辑</Link>
               </li>
               {/* <li>
                 <a onClick={e => output(record.id, record.title)}>导出</a>
               </li> */}
               <li>
-                <Popconfirm title='确认删除吗' cancelText='取消' okText="确定" onConfirm={() => updateList(() => request(`/article/${articleId}`,{ method: 'DELETE'}))}>
+                <Popconfirm title='确认删除吗' cancelText='取消' okText="确定" onConfirm={() => updateList(() =>
+                  request(`/article/${articleId}`,{ method: 'DELETE'}).then(message.success('删除成功'))
+                  )}>
                   <a className='delete-text'>删除</a>
                 </Popconfirm>
               </li>
@@ -90,8 +92,8 @@ const ArticleList: FC<ArticleListProps> = (props: ArticleListProps) => {
   });
 
   function renderColor(name: string, list: Array<TagInfo>) {
-    const target = list.find(l => l.name === name)
-    return target && target.color
+    const target = list.find(l => l.name === name);
+    return target && target.color;
   }
   function outputAll() {
     // download('/article/output/all')
@@ -157,7 +159,7 @@ const ArticleList: FC<ArticleListProps> = (props: ArticleListProps) => {
                 <>
                   <Button type='primary' size='small' style={{ marginRight: 8 }} disabled={selectedRowKeys.length === 0} onClick={outputSelected}>导出选中项</Button>
                   <Popconfirm
-                    title='Are you sure delete the articles?'
+                    title='确认删除选中的文章吗?'
                     onConfirm={delList}
                     // onCancel={cancel}
                     okText='Yes'

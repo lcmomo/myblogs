@@ -22,7 +22,7 @@
   },
   "include": [
     "src",
-    "./types/img.d.ts"
+    "./types/*.d.ts"
     // ".",
     // "/client/config/client/webpack.config.js"
   ],

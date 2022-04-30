@@ -8,10 +8,13 @@ import { BackTop, Button, Input, message, Modal } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+
 import AppTag from './tag';
 
 type ArticleEditProps = {
-
+  history: History,
+  location: Location,
+  match: Record<string, any>
 }
 
 const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
@@ -25,19 +28,22 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
   const history = useHistory();
   const location = useLocation();
   const historyState = history.location.state as Record<string, unknown>;
-  const articleId = historyState?.articleId as number;
+  // const articleId = historyState?.articleId as number;
+  const articleId = props.match.params.id;
+  console.log('ar: ', props)
   useBreadcrumb([{ link: '/admin/article/manager', name: '文章管理' }, articleId ? '编辑文章' : '新增文章']);
   useEffect(() => {
     if (articleId) {
-      fetchArticle(articleId)
+      fetchArticle(articleId);
     }
-  }, []);
+  }, [props.match.params.id]);
   console.log('location: ', location)
 
   async function fetchArticle(id: number) {
     const { title, content, tags } =  await request(`/article/${id}?type=0`);
     setTitle(title);
     setContent(content);
+    console.log('fetch: ', content)
     const tagsList = tags.map((d: any) => d.name);
     setTagList(tagsList);
   }
@@ -47,7 +53,7 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
     const payload = {
         title,
         content,
-        tagList: tagSelectedList,
+        tags: tagSelectedList,
         authorId: authorId
     }
     const { id } =  await request('/article', { method: 'POST', body: payload});
@@ -59,12 +65,20 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
       });
   }
   async function update() {
-    await request(`/article/${articleId}`, {
+    await request(`/article`, {
+      method: 'PUT',
+      body: {
         title,
         content,
         tags: tagSelectedList,
+        articleId
+      }
       });
     message.success('更新成功');
+    setTimeout(() => {
+      history.push(`/admin/article/list`);
+    }, 500);
+
   }
 
   return (
@@ -94,6 +108,7 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
           </span>
         </li>
       </ul>
+      {/* <MdEditor value={content} onChange={setContent} /> */}
       <MdEditor value={content} onChange={setContent} />
       <Button
         type='primary'
