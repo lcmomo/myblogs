@@ -53,12 +53,11 @@ const routeConfig: RouteProps[] = [
         exact: false,
         component: AdminArticleEdit
       },
-      // {
-      //   path: '',
-      //   exact: true,
-      //   component: AdminHome
-
-      // },
+      {
+        path: '',
+        exact: true,
+        component: AdminHome
+      },
     ]
   },
 
