@@ -85,7 +85,6 @@ export class UserService {
       }
 
       if (username) {
-        console.log("username: ", username);
         where.username = {};
         where.username = { [like]: `%${username}%` }
       }
@@ -111,7 +110,7 @@ export class UserService {
     }
   }
 
- async  delete(userId: number) {
+ async delete(userId: number) {
   //  6
   try {
     // 删除用户的同时会删除评论和回复

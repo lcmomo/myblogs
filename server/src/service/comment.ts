@@ -54,7 +54,7 @@ export class CommentService {
   }
 
    async fetchCommentList(articleId: number) {
-    const data = await this.commentModel.findAndCountAll({
+    const data: any = await this.commentModel.findAndCountAll({
       where: { articleId },
       attributes: ['id', 'content', 'createdAt'],
       include: [
@@ -71,31 +71,39 @@ export class CommentService {
       ['replies', 'createdAt', 'ASC']
     ],
     });
-    data.rows.forEach(comment => {
-      comment.user.github = JSON.parse(comment.user.github)
-      comment.replies.forEach(reply => {
-        reply.user.github = JSON.parse(reply.user.github)
-      })
-    });
+    if (data) {
+      data.rows.forEach((comment: Comment) => {
+        if (comment && comment.user && comment.user.github) {
+          comment.user.github = JSON.parse(comment.user.github);
+        }
+        comment.replies && comment.replies.forEach(reply => {
+          if (reply && reply.user && reply.user.github) {
+            reply.user.github = JSON.parse(reply.user.github);
+          }
+        });
+      });
+    }
     return data;
   }
 
   async delete(commentId: number) {
     console.log("id: ", commentId)
     try {
-      const comment = await this.commentModel.findOne({
+      const comment: Comment | null = await this.commentModel.findOne({
         where: {
           id: commentId
         },
         include: [{ model: Reply, as: 'replies'}]
       });
       console.log("comment: ", comment);
-      if (comment.replies && comment.replies.length) {
-        for await (const reply of comment.replies) {
-          reply.destroy();
+      if (comment) {
+        if (comment.replies && comment.replies.length) {
+          for await (const reply of comment.replies) {
+            reply.destroy();
+          }
         }
-      }
       await comment.destroy();
+    }
       return ResultGenerator.genDefaultSuccessResult();
     } catch(e) {
       console.error(e)

@@ -18,14 +18,14 @@ const menu: Array<MenuItemProps> = [
     name: '文章',
     children: [
       {
-        path: '/admin/article/manager',
+        path: '/admin/article/list',
         icon: 'folder',
-        name: '管理'
+        name: '列表'
       },
       {
         path: '/admin/article/add',
         icon: 'edit',
-        name: '新增'
+        name: '编辑'
       }
     ]
   },

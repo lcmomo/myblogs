@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
@@ -21,7 +22,7 @@
   },
   "include": [
     "src",
-    "./types/img.d.ts"
+    "./types/*.d.ts"
     // ".",
     // "/client/config/client/webpack.config.js"
   ],

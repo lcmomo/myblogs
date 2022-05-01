@@ -88,33 +88,34 @@ const AdminUser: FC<{}> = () => {
   }
   return (
     <>
-    <Form
-        layout="inline"
-        form={form}
-      >
-        <FormItem label="姓名" name="username">
-          <Input placeholder="请输入姓名" autoComplete="off" allowClear />
-        </FormItem>
-        <FormItem label="用户类型" name="type">
-          <Select style={{ width: 200 }} allowClear>
-            {typeMapList.map(item => (
-              <Select.Option key={item.value} value={item.value}>
-                {item.label}
-              </Select.Option>
-              ))}
-          </Select>
-        </FormItem>
-        <FormItem label="创建日期" name="rangeDate" >
-          <DatePicker.RangePicker />
-        </FormItem>
-        <Form.Item>
-          <Button type='primary' onClick={handleSubmit} style={{ marginRight: 8 }}>搜索</Button>
+      <Form
+          layout="inline"
+          form={form}
+        >
+          <FormItem label="姓名" name="username">
+            <Input placeholder="请输入姓名" autoComplete="off" allowClear />
+          </FormItem>
+          <FormItem label="用户类型" name="type">
+            <Select style={{ width: 200 }} allowClear>
+              {typeMapList.map(item => (
+                <Select.Option key={item.value} value={item.value}>
+                  {item.label}
+                </Select.Option>
+                ))}
+            </Select>
+          </FormItem>
+          <FormItem label="创建日期" name="rangeDate" >
+            <DatePicker.RangePicker />
+          </FormItem>
+          <Form.Item>
+            <Button type='primary' onClick={handleSubmit} style={{ marginRight: 8 }}>搜索</Button>
 
-        </Form.Item>
-      </Form>
+          </Form.Item>
+        </Form>
 
-   <Table {...tableProps} />
-   </>
+      <Table {...tableProps}
+      />
+    </>
   )
 }
 

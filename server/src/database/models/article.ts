@@ -13,38 +13,37 @@ class Article extends Model {
     primaryKey: true,
     autoIncrement: true
   })
-  id: number;
+  id!: number;
 
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
     unique: true
   })
-  title: string;
+  title!: string;
 
   @Column({
     type: DataType.TEXT,
     comment: '文章内容'
   })
-  content: string;
+  content!: string;
 
   @Column({
-    type: DataType.INTEGER({ length: 11}),
+    type: DataType.INTEGER({ length: 11 }),
     defaultValue: 0,
     comment: '阅读数'
   })
-  viewCount: number;
+  viewCount!: number;
 
   @Column({
     type: DataType.DATE,
     defaultValue: DataType.NOW,
     get() {
       const _this = this;
-      // console.log("di:      ", this.getDataValue('createdAt'))
       return dayjs(_this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
     }
   })
-  createdAt?: string;
+  createdAt!: string;
   @Column({
     type: DataType.DATE,
     defaultValue: DataType.NOW,
@@ -55,13 +54,13 @@ class Article extends Model {
   updatedAt?: string;
 
   @HasMany(() => Comment)
-  comments: Comment[];
+  comments!: Comment[];
 
   @HasMany(() => Reply)
-  replies: Reply[];
+  replies!: Reply[];
   
   @HasMany(() => Tag)
-  tags: Tag[]
+  tags!: Tag[]
 }
 
 
