@@ -14,11 +14,11 @@ export const devConfig: SequelizeOptions = {
 
 export const prodConfig: SequelizeOptions = {
   dialect: 'mysql',
-  host: 'localhost',
+  host: '8.141.160.52',
   port: 3306,
-  username: 'root',
-  password: 'password',
-  database: ''
+  username: 'myblogs',
+  password: 'myblogs',
+  database: 'myblogs_test'
 }
 
 export const dataBaseConfig = isDev ? devConfig : prodConfig;
