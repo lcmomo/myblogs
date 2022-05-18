@@ -1,21 +1,18 @@
-
-
 #!/bin/bash
 
 source /etc/profile #声明环境变量;
 
+
 set -x;
 
 CURRENTDIR=`pwd`
+echo "aaa${CURRENTDIR}"
 
 CLIENT_BASE_DIR="/www/wwwroot/blog.llchaoblogs.work/blogs"
-SERVER_BASE_DIR="/usr/local/work/myblogs"
 ITEM_NAME="myblogs"
 LAST_WORK_DIR="${JENKINS_HOME}/${JOB_BASE_NAME}/myblogs"
 
-echo $SERVER_BASE_DIR
-
-checkEnv() {
+check_env() {
 
   echo "环境检查....................";
 
@@ -24,9 +21,8 @@ checkEnv() {
   NPMVERSION=`yarn -v`
   PM2VERSION=`pm2 -v`
 
-
   NOTFOUND="command not found"
-  if [ $GITVERSION == *$NOTFOUND* || $NODEVERSION == *$NOTFOUND* || $NPMVERSION == *$NOTFOUND* || $PM2VERSION == *$NOTFOUND* ]
+  if [ *$GITVERSION* == *$NOTFOUND* || *$NODEVERSION* == *$NOTFOUND* || *$NPMVERSION* == *$NOTFOUND* || *$PM2VERSION* == *$NOTFOUND* ]
   then
     echo "环境检查失败，退出构建"
     exit -1
@@ -52,27 +48,6 @@ build_client() {
 
 }
 
-build_server() {
-  echo "构建服务端...."
-  echo "部署server..........."
-
-  cd $CURRENTDIR/$ITEM_NAME/server
-
-  cp  -rf $CURRENTDIR/$ITEM_NAME/server $SERVER_BASE_DIR
-  cd $SERVER_BASE_DIR/server
-  echo "下载依赖............"
-  yarn
-  
-  echo "构建服务端........."
-  yarn prod
-
-  echo "启动服务"
-
-  pm2 start ./dist/main.js -f --name="myblogs"
-
-  echo "部署服务端完成......."
-}
-
 deploy_client() {
   echo "部署client..............."
 
@@ -95,10 +70,8 @@ git clone https://github.com/lcmomo/myblogs.git
 
 echo "代码下载完成.................."
 
-checkEnv
+check_env
 
 build_client
-
-build_server
 
 deploy_client
