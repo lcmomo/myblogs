@@ -5,7 +5,7 @@ export const isDev: boolean = process.env.NODE_ENV === 'development';
 
 export const devConfig: SequelizeOptions = {
   dialect: 'mysql',
-  host: 'localhost',
+  host: '8.141.160.52',
   port: 3306,
   username: 'myblogs',
   password: 'myblogs',
