@@ -55,7 +55,7 @@ deploy_client() {
   cd ${CURRENTDIR}/${ITEM_NAME}/client
   # cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
 
-  mv -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist/* ${CLIENT_BASE_DIR}/myblogs
+  mv -f ${CURRENTDIR}/${ITEM_NAME}/client/dist/* ${CLIENT_BASE_DIR}/myblogs
 
   if [ $? -ne 0 ]
   then
