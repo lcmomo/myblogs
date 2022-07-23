@@ -10,7 +10,8 @@ echo "aaa${CURRENTDIR}"
 
 CLIENT_BASE_DIR="/www/wwwroot/blog.llchaoblogs.work/blogs"
 ITEM_NAME="myblogs"
-LAST_WORK_DIR="${JENKINS_HOME}/${JOB_BASE_NAME}/myblogs"
+JENKINS_WORKSPACE_NAME="workspace"
+LAST_WORK_DIR="${JENKINS_HOME}/${JENKINS_WORKSPACE_NAME}/${JOB_BASE_NAME}/myblogs"
 
 check_env() {
 
@@ -54,9 +55,9 @@ deploy_client() {
   cd ${CURRENTDIR}/${ITEM_NAME}/client
   # cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
 
-  mv ${CURRENTDIR}/${ITEM_NAME}/client/dist ${CLIENT_BASE_DIR}/myblogs
+  mv -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist/* ${CLIENT_BASE_DIR}/myblogs
 
-  if [$? -ne 0 ]
+  if [ $? -ne 0 ]
   then
     echo "部署失败"
     exit -1
