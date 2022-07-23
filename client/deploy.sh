@@ -54,8 +54,13 @@ deploy_client() {
   cd ${CURRENTDIR}/${ITEM_NAME}/client
   # cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
 
-  mv ${CLIENT_BASE_DIR}/dist ${CLIENT_BASE_DIR}/myblogs
+  mv ${CURRENTDIR}/${ITEM_NAME}/client/dist ${CLIENT_BASE_DIR}/myblogs
 
+  if [$? -ne 0 ]
+  then
+    echo "部署失败"
+    exit -1
+  fi
   echo "部署client完成....."
 
 }
