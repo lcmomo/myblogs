@@ -6,8 +6,8 @@ const HeaderRight = (props: any) => {
   return (
     <div className="header-right">
       <Search />
-      <UserInfo />
       <NavBar />
+      <UserInfo />
     </div>
   )
 };
