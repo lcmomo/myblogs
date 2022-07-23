@@ -52,7 +52,7 @@ deploy_client() {
   echo "部署client..............."
 
   cd ${CURRENTDIR}/${ITEM_NAME}/client
-  cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
+  # cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
 
   mv ${CLIENT_BASE_DIR}/dist ${CLIENT_BASE_DIR}/myblogs
 
