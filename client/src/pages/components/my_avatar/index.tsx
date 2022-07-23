@@ -1,11 +1,10 @@
 import React from 'react';
 import '../my_avatar/style.less';
 import { Avatar, Popover, Typography } from 'antd';
-import Href from '../Href';
+import Href from '../href';
 
-import { userInfoProp } from '@/type';
 import { DISCUSS_AVATAR } from '../../../config';
-import MyIcon from '../Icon';
+import MyIcon from '../my_icon';
 const { Text, Title } = Typography;
 
 function AvatarComponent(props: any) {

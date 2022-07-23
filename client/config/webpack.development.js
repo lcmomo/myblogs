@@ -26,35 +26,7 @@ const webpackConfig = {
       //     fix: false // 是否自动修复，如果是，每次保存时会自动修复可以修复的部分
       //   }
       // },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        include: [`${appPath}/assets`],
-        exclude: /node_modules/,
-        loader: 'file-loader',
-        options: {
-          publicPath: 'assets/img',
-          name: '[name].[hash:5].[ext]'
-        },
-      },
-
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        include: [`${appPath}/assets`],
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-          {
-            loader: '@svgr/webpack',
-            options: {
-              babel: false,
-              icon: true,
-              name: '[name].[hash:5].[ext]'
-            }
-          }
-        ]
-      }
+      
     ]
   },
   devServer: {

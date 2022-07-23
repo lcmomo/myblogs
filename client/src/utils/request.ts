@@ -1,5 +1,7 @@
 import * as fetch from 'isomorphic-fetch';
 import { API_BASE_URL } from '@/config';
+import { message } from 'antd';
+import { stringify } from 'qs';
 
 const getToken = () => 't';
 const baseUrl: string = API_BASE_URL;
@@ -12,9 +14,9 @@ function checkStatus(response: any) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  const error = new Error(response.statusText);
-  error.message = response;
-  throw error;
+  // const error = new Error(response.statusText);
+  // error.message = response;
+  message.error(response.statusText)
 }
 
 type requestOptionsType = {
@@ -35,12 +37,14 @@ export interface ResponseProps {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default async function request(url: string, options: requestOptionsType): Promise<any> {
+export default async function request(url: string, options?: requestOptionsType, config = { showMessage: false} ): Promise<any> {
   //console.log(options.body instanceof FormData);
  
   const newOptions = {  ...options };
   // const storgetoken=localStorage.getItem('userInfo')!==null ? JSON.parse(localStorage.getItem('userInfo')).token : null
   const token = getToken();
+
+  let queryUrl = url;
   // console.log('token: ', token)
   if (newOptions.method === 'POST' || newOptions.method === 'PUT' || newOptions.method === 'DELETE') {
     if (!(newOptions.body instanceof FormData)) {
@@ -60,6 +64,8 @@ export default async function request(url: string, options: requestOptionsType):
         ...newOptions.headers,
       };
     }
+  } else if(newOptions.params) {
+    queryUrl = `${url}?${stringify(newOptions.params)}`;
   }
   newOptions.headers = {
     authorization: token,
@@ -67,11 +73,16 @@ export default async function request(url: string, options: requestOptionsType):
   }
 
   try {
-    const response = await fetch(`${baseUrl}${url}`, newOptions);
+    const response = await fetch(`${baseUrl}${queryUrl}`, newOptions);
     const response_1 = await checkStatus(response);
     const data = await parseJSON(response_1);
-    console.log('data: ', data)
-    return ({ data });
+    if (!data || data.code !== 200) {
+      message.error(data && data.msg || 'Error!');
+      return;
+    } else if(config.showMessage) {
+      message.success(data.msg || 'OK!');
+    }
+    return (data.data);
   } catch (err) {
     return ({ err });
   }

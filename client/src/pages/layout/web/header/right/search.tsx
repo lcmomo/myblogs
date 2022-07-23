@@ -3,12 +3,12 @@ import { Input, Row } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
 // import useMount from '@/hooks/useMount'
 import { decodeQuery } from '@/utils';
-import MyIcon from '@/pages/components/Icon';
+import MyIcon from '@/pages/components/my_icon';
 
 function SearchButton(props: any) {
-  const history = useHistory()
-  const location = useLocation()
-  const [keyword, setKeyword] = useState('')
+  const history = useHistory();
+  const location = useLocation();
+  const [keyword, setKeyword] = useState('');
 
   // useMount(() => {
   //   const { keyword } = decodeQuery(location.search)
@@ -16,17 +16,16 @@ function SearchButton(props: any) {
   // })
 
   const handleSubmit = useCallback(() => {
-    console.log("cur: ", keyword)
     if (keyword) history.push(`/?page=1&keyword=${keyword}`)
   },[keyword]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("key: ", e.target.value, keyword)
+
     setKeyword(e.target.value);
   },[]);
 
   const handlePressEnter = useCallback((e: any) => {
-    console.log("blur: ", e.target, keyword)
+
     e.target.blur();
   }, [keyword]);
 

@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 
 import { useListener } from '@/hooks/usebus';
 import { save } from '@/utils/storage';
-import { login } from '@/store/slice/user';
+import { login, LoginInfo, register, RegisterInfo } from '@/store/slice/user';
+import { encrypt } from '@/utils/secret';
 
 type ModalTitleType = {
   [key: string]: string
@@ -43,7 +44,7 @@ function SignModal(props: SignModalProps | null) {
   const dispatch = useDispatch();
   const location = useLocation();
   const [visible, setVisible] = useState(false);
-  const [type, setType] = useState('login');
+  const [type, setType] = useState('');
   const [form] = Form.useForm();
 
   useListener('openSignModal', (type: string) => {
@@ -51,15 +52,22 @@ function SignModal(props: SignModalProps | null) {
     setType(type);
     setVisible(true);
   })
-
 const handleSubmit = useCallback((e) => {
     e.preventDefault()
-    form.validateFields().then(value => {
-      dispatch(login(value));
+
+    form.validateFields().then((values: LoginInfo & RegisterInfo) => {
+      values = {
+        ...values,
+        password: encrypt(values.password)
+      }
+      const action = type === 'login' ? login : register;
+      dispatch(action(values))
     }).then(() => {
       setVisible(false);
+    }).catch(err => {
+      console.log(err)
     })
-  }, []);
+  }, [type]);
   return (
     <Modal
       width={460}
@@ -77,7 +85,7 @@ const handleSubmit = useCallback((e) => {
           type === 'login' ? (
             <>
               <FormItem label="用户名" name="account" rules={[ {required: true, message: '请输入用户名'}]}>
-                <Input placeholder="请输入用户名" />
+                <Input placeholder="请输入用户名" autoComplete="off" />
               </FormItem>
               <FormItem label="密码" name="password" rules={[ {required: true, message: '请输入密码'}]}>
                 <Input placeholder="请输入密码" type="password" />
@@ -85,8 +93,8 @@ const handleSubmit = useCallback((e) => {
             </>
           ) : (
             <>
-            <FormItem label="用户名" name="username" rules={[ {required: true, message: '请输入用户名'}]}>
-              <Input placeholder="请输入用户名" />
+            <FormItem label="用户名" name="username"  rules={[ {required: true, message: '请输入用户名'}]}>
+              <Input placeholder="请输入用户名" autoComplete="off" />
             </FormItem>
             <FormItem label="密码" name="password" rules={[ {required: true, message: '请输入密码'}]}>
               <Input placeholder="请输入密码" type="password" />
@@ -95,7 +103,7 @@ const handleSubmit = useCallback((e) => {
               <Input placeholder="请再次输入密码" type="password" />
             </FormItem>
             <FormItem label="邮箱" name="email" rules={[ {required: true, message: '请输入邮箱'}, {type: 'email', message: '输入邮箱格式不正确'}]}>
-              <Input placeholder="请再次输入密码"  />
+              <Input placeholder="请再次输入密码" autoComplete="off"  />
             </FormItem>
           </>
           )
