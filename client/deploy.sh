@@ -8,7 +8,7 @@ set -x;
 CURRENTDIR=`pwd`
 echo "aaa${CURRENTDIR}"
 
-CLIENT_BASE_DIR="/www/wwwroot/blog.llchaoblogs.work/blogs"
+CLIENT_BASE_DIR="/www/wwwroot/blog.llchaoblogs.work/blogs/myblogs/"
 ITEM_NAME="myblogs"
 JENKINS_WORKSPACE_NAME="workspace"
 LAST_WORK_DIR="${JENKINS_HOME}/${JENKINS_WORKSPACE_NAME}/${JOB_BASE_NAME}/myblogs"
@@ -52,10 +52,11 @@ build_client() {
 deploy_client() {
   echo "部署client..............."
 
-  cd ${CURRENTDIR}/${ITEM_NAME}/client
-  # cp -rf ${CURRENTDIR}/${ITEM_NAME}/client/dist  ${CLIENT_BASE_DIR}
-
-  mv -f ${CURRENTDIR}/${ITEM_NAME}/client/dist/* ${CLIENT_BASE_DIR}/myblogs
+	rm -rf $CLIENT_BASE_DIR/
+   if [ ! -d "$CLIENT_BASE_DIR" ]; then
+  		mkdir $CLIENT_BASE_DIR
+	fi
+  mv -f ${CURRENTDIR}/${ITEM_NAME}/client/dist/* ${CLIENT_BASE_DIR}
 
   if [ $? -ne 0 ]
   then
@@ -65,16 +66,6 @@ deploy_client() {
   echo "部署client完成....."
 
 }
-
-echo "清理上次构建信息"
-rm -rf ${LAST_WORK_DIR}/
-
-echo "下载代码开始.................."
-
-git clone https://github.com/lcmomo/myblogs.git
-
-
-echo "代码下载完成.................."
 
 check_env
 
