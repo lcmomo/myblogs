@@ -1,36 +1,17 @@
 import React from 'react'
 
 import { Route, RouteProps, Switch, Redirect, RouteComponentProps, RouteChildrenProps } from 'react-router-dom';
+import { get } from './storage';
+import { USER_ROLES } from '@/config';
+import { decodeToken } from './token';
+import { JwtPayload } from 'jsonwebtoken';
 // import createHistory from 'history/createHashHistory';
 // const history = createHistory();
-const renderRouter = (routes?: Array<RouteProps>) => {
-  let children: any = [];
 
-  const renderRoute = (route?: RouteProps)  => {
-    const { path, component } = route;
-    const role = 1;
-    if (path.includes('admin') && role !== 1) {
-      route = {
-        ...route,
-        component: () => <Redirect to='/' />,
-        children: []
-      }
-    }
-    if (!component) return;
-    if (route.children) {
-      const childRoutes = renderRouter(route.children as Array<RouteProps>);
-      children.push(<Route key={ `${path}` } {...route}>{childRoutes}</Route>);
-      (route.children as Array<RouteProps>).forEach((r: RouteProps) => renderRoute(r));
-    } else {
-      children.push(<Route key={ `${path}` } {...route}></Route>)
-    }
-  }
-  routes.forEach(item => renderRoute(item));
-  return <Switch>{children}</Switch>;
-}
+const currentUser  = (decodeToken(get('token')) as JwtPayload);
+const role  = currentUser?.role;
 
 export type MyRouteComponentProps = React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
-
 
 //该组件通过递归的方式，将所有route中带有children路由的父路由进行解构,最终用createBasicRoute函数来渲染
 const createFixRoute = (route: any, index: string) => {
@@ -65,9 +46,12 @@ const createFixRoute = (route: any, index: string) => {
 export const createBasicRoute = (route: RouteProps, index: string) => {    //  最基础的Router 用法
   const { path, component: Component } = route;
   return <Route exact key={index} path={path} component={(props: any)=> {
-    // props.history.listen(path => {    //  路由监听
-
-    // });
+    props.history.listen((path:  any)=> {    //  路由监听
+      const { pathname } = path;
+      if (pathname.includes('admin') && role !== USER_ROLES.ADMIN) {
+        props.history.push('/403');
+      }
+    });
     return <Component {...props} />;
   }} />;
 };

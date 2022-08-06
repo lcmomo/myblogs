@@ -25,5 +25,10 @@ export const dataBaseConfig = isDev ? devConfig : prodConfig;
 
 export const TOKEN = {
   secret: 'chao',
-  expiresIn: '10h'
+  expiresIn: '10min'
+}
+
+export const USER_ROLES = {
+  ADMIN: 1,
+  USER: 2
 }

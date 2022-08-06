@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../index';
 import { loginI, registerI } from '@/services/user';
 import { save, get, remove } from '@/utils/storage';
+import { decodeToken } from '@/utils/token';
 
 export interface UserInfo {
   username: string;
@@ -25,7 +26,7 @@ export type RegisterInfo = {
   email: string;
 }
 
-const userInfo = get('userInfo');
+const userInfo = decodeToken(get('token')) as UserInfo;
 const defaultUserInfo = {
   username: '',
   role: 2,
@@ -33,7 +34,7 @@ const defaultUserInfo = {
   github: ''
 }
 const initState: UserState = {
-  userInfo: userInfo || defaultUserInfo
+  userInfo:  userInfo || defaultUserInfo
 
 }
 
@@ -57,8 +58,8 @@ export const login = (loginInfo: LoginInfo) => async (dispatch: AppDispatch) => 
   try {
     const data = await loginI(loginInfo);
     if (data) {
-      save('userInfo', data);
-      dispatch(setUserInfo(data));
+      save('token', data.token);
+      dispatch(setUserInfo(decodeToken(data.token) as UserInfo));
     }
   } catch(err) {
     throw err;
@@ -66,7 +67,7 @@ export const login = (loginInfo: LoginInfo) => async (dispatch: AppDispatch) => 
 };
 
 export const logout = () => (dispatch: AppDispatch) => {
-  remove('userInfo');
+  remove('token');
   dispatch(setUserInfo({ username: '', userId: 0, role: 2, github: null }))
 }
 
@@ -74,8 +75,8 @@ export const register = (registerInfo: RegisterInfo) => async (dispatch: AppDisp
   try {
     const data = await registerI(registerInfo);
     if (data) {
-      save('userInfo', data);
-      dispatch(setUserInfo(data));
+      save('token', data.token);
+      dispatch(setUserInfo(decodeToken(data.token) as UserInfo));
     }
   } finally {
 

@@ -21,6 +21,9 @@ const AdminUser = lazy(() => import('./pages/views/admin/user'));
 const AdminArticleList = lazy(() => import('./pages/views/admin/article/list'));
 const AdminHome = lazy(() => import('./pages/views/admin/home'));
 const AdminArticleEdit = lazy(() => import('./pages/views/admin/article/edit'));
+const Forbidden = lazy(() => import('./pages/views/web/403'));
+const NotFound = lazy(() => import('./pages/views/web/404'))
+
 const routeConfig: RouteProps[] = [
   {
     path: '/test',
@@ -73,6 +76,11 @@ const routeConfig: RouteProps[] = [
         component: webHome
       },
       {
+        path: '/403',
+        exact: true,
+        component: Forbidden
+      },
+      {
         path: '/article/:id',
         exact: true,
         component: Article
@@ -81,7 +89,12 @@ const routeConfig: RouteProps[] = [
         path: '/about',
         exact: true,
         component: About
-      }
+      },
+      {
+        path: '*',
+        exact: true,
+        component: NotFound
+      },
     ]
   },
 ];

@@ -13,7 +13,6 @@ function AppMain(props: any) {
   });
 
   const { children, app } = props;
-  console.log("main props: ", props);
   const childRoutes = children && children.props.children;
   const hasChildren =  childRoutes && childRoutes.length > 0;
   return (

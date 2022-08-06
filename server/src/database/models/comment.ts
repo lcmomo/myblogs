@@ -37,7 +37,6 @@ class Comment extends Model {
     defaultValue: DataType.NOW,
     get() {
       const _this = this;
-      // console.log("di:      ", this.getDataValue('createdAt'))
       return dayjs(_this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
     }
   })

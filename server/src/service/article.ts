@@ -66,7 +66,6 @@ export class ArticleService {
 
       return ResultGenerator.genSuccessResult(articleList);
     } catch(err) {
-      console.log(err);
       return ResultGenerator.genFailResult(500, '服务端错误')
     }
   }
@@ -127,7 +126,6 @@ export class ArticleService {
         return ResultGenerator.genSuccessResult(data, '创建成功！')
       }
     } catch(e) {
-      console.log('e: ', e)
       return ResultGenerator.genFailResult(500, '服务端错误');
     }
   }

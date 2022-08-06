@@ -65,7 +65,6 @@ const handleSubmit = useCallback((e) => {
     }).then(() => {
       setVisible(false);
     }).catch(err => {
-      console.log(err)
     })
   }, [type]);
   return (

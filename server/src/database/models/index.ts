@@ -6,7 +6,6 @@ import { Tag } from './tag';
 
 
 // const initModels = (sequelize: Sequelize): void => {
-//   console.log("=========")
 //  userModel(sequelize);
 // };
 /**
