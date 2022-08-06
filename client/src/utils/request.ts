@@ -2,8 +2,8 @@ import * as fetch from 'isomorphic-fetch';
 import { API_BASE_URL } from '@/config';
 import { message } from 'antd';
 import { stringify } from 'qs';
+import { get, remove } from './storage';
 
-const getToken = () => 't';
 const baseUrl: string = API_BASE_URL;
 
 function parseJSON(response: any) {
@@ -38,21 +38,18 @@ export interface ResponseProps {
  * @return {object}           An object containing either "data" or "err"
  */
 export default async function request(url: string, options?: requestOptionsType, config = { showMessage: false} ): Promise<any> {
-  //console.log(options.body instanceof FormData);
- 
+
   const newOptions = {  ...options };
-  // const storgetoken=localStorage.getItem('userInfo')!==null ? JSON.parse(localStorage.getItem('userInfo')).token : null
-  const token = getToken();
+
+  const token = get('token');
 
   let queryUrl = url;
-  // console.log('token: ', token)
   if (newOptions.method === 'POST' || newOptions.method === 'PUT' || newOptions.method === 'DELETE') {
     if (!(newOptions.body instanceof FormData)) {
 
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
-        authorization: token,
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -60,7 +57,6 @@ export default async function request(url: string, options?: requestOptionsType,
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
-        authorization: token,
         ...newOptions.headers,
       };
     }
@@ -68,15 +64,18 @@ export default async function request(url: string, options?: requestOptionsType,
     queryUrl = `${url}?${stringify(newOptions.params)}`;
   }
   newOptions.headers = {
+    Token: token,
     authorization: token,
     ...newOptions.headers
   }
 
   try {
     const response = await fetch(`${baseUrl}${queryUrl}`, newOptions);
-    const response_1 = await checkStatus(response);
-    const data = await parseJSON(response_1);
-    if (!data || data.code !== 200) {
+    const data = await parseJSON(response);
+    if (data.code === 401) {
+      message.error(data && data.msg || 'Error!');
+      remove('token'); // 身份过期，清空保存的token
+    } else if (!data || data.code !== 200) {
       message.error(data && data.msg || 'Error!');
       return;
     } else if(config.showMessage) {

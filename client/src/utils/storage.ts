@@ -5,8 +5,12 @@
 export const get = (key: string) => {
   const value = localStorage.getItem(key);
   if (!value) return null;
-
-  return JSON.parse(value);
+  try {
+   return JSON.parse(value);
+  }
+  catch {
+    return value;
+  }
 }
 
 /**

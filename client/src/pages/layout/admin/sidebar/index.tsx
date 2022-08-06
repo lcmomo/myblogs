@@ -28,7 +28,7 @@ function getMenuOpenKeys(menu: Array<MenuItemProps>) {
 const menuMenuOpenKeys = getMenuOpenKeys(menu);
 
 const AdminSidebar: FC<AdminSidebarProps> = (props) => {
-  
+
   function renderMenu(list: Array<MenuItemProps>) {
     const renderRoute = ((item: MenuItemProps) => {
       if (item.hidden) return null;
