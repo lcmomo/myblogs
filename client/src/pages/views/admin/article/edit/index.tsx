@@ -30,20 +30,18 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
   const historyState = history.location.state as Record<string, unknown>;
   // const articleId = historyState?.articleId as number;
   const articleId = props.match.params.id;
-  console.log('ar: ', props)
+
   useBreadcrumb([{ link: '/admin/article/manager', name: '文章管理' }, articleId ? '编辑文章' : '新增文章']);
   useEffect(() => {
     if (articleId) {
       fetchArticle(articleId);
     }
   }, [props.match.params.id]);
-  console.log('location: ', location)
 
   async function fetchArticle(id: number) {
     const { title, content, tags } =  await request(`/article/${id}?type=0`);
     setTitle(title);
     setContent(content);
-    console.log('fetch: ', content)
     const tagsList = tags.map((d: any) => d.name);
     setTagList(tagsList);
   }

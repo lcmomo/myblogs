@@ -1,18 +1,20 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors} from '@nestjs/common';
 import { UserService } from '../service/user';
 import { UserDto, UserQueryParams } from '../models/dto/user';
-import { AuthToken } from '../interceptors/auth_token';
+import { AuthToken, AuthAdmin } from '../interceptors';
 
 @Controller('/user')
 export class UserController {
   constructor(private userService:  UserService) {}
 
   @Get('info')
+  @UseInterceptors(AuthToken, AuthAdmin)
   async getAll() {
     return await this.userService.findAll();
   }
 
-  @Get('list') 
+  @Get('list')
+  @UseInterceptors(AuthToken, AuthAdmin)
     async list(@Query() query: UserQueryParams) {
       return await this.userService.list(query);
   }
@@ -32,6 +34,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseInterceptors(AuthToken, AuthAdmin)
   async delete(@Param('id') userId: number) {
     return await this.userService.delete(userId);
   }

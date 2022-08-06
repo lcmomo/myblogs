@@ -9,6 +9,7 @@ import useBus from '@/hooks/usebus';
 import SignModal from '@/pages/components/signmodal';
 import { logout } from '@/store/slice/user';
 import { RootState } from '@/store';
+import { USER_ROLES } from '@/config';
 // import { DISCUSS_AVATAR } from '@/config';
 
 // import { userInfoProp } from '@/type';
@@ -24,11 +25,6 @@ function UserInfo(props: any) {
   const bus = useBus();
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
 
-  // const userInfo = {
-  //   username: '',
-  //   github: '',
-  //   role: 2
-  // }
   const { username, github, role } = userInfo;
 
   const loginCall = useCallback(
@@ -50,12 +46,12 @@ function UserInfo(props: any) {
 
   const MenuOverLay = (
     <Menu>
-      {role === 1 && (
+      {role === USER_ROLES.ADMIN && (
         <Menu.Item key="uploadArticle">
           <span onClick={e => console.log("导入文章")}>导入文章</span>
         </Menu.Item>
       )}
-      {role === 1 && (
+      {role === USER_ROLES.ADMIN && (
         <Menu.Item key="manage">
           <span onClick={e => props.history.push('/admin')}>后台管理</span>
         </Menu.Item>

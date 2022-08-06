@@ -17,8 +17,11 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 const appPath = resolve('src');
-console.log("currentpathL ", resolve(__dirname))
+
 const webpackConfig = {
   entry: {
     app: resolve('./src/index.tsx'),
@@ -116,7 +119,8 @@ const webpackConfig = {
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
       analyzerMode: 'static'
-    })
+    }),
+    new NodePolyfillPlugin()
     // new DashboardPlugin(),
   ]
 }

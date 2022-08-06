@@ -22,9 +22,6 @@ interface SideBarProps {
 export const HEADER_BLOG_NAME = '夙兮执梦';
 
 
-// console.log(AvatarImg)
-
-
 // API_BASE_URL
 export const API_BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3002' : 'http://blog.llchaoblogs.work:3002';
 
@@ -74,3 +71,8 @@ export const ANNOUNCEMENT = {
 }
 
 export const PUB_KEY = 'abcd1234abcd1234';
+
+export const USER_ROLES = {
+  ADMIN: 1,
+  USER: 2
+};
