@@ -58,18 +58,6 @@ build_server() {
   echo "部署服务端完成......."
 }
 
-
-
-echo "清理上次构建信息"
-rm -rf ${LAST_WORK_DIR}/
-
-echo "下载代码开始.................."
-
-git clone https://github.com/lcmomo/myblogs.git
-
-
-echo "代码下载完成.................."
-
 check_env
 
 build_server
