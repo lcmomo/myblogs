@@ -4,12 +4,7 @@ import Href from '@/pages/components/href';
 import { Alert, Divider, Tag } from 'antd';
 import useFetchList from '@/hooks/use_fetch_list';
 import { Link } from 'react-router-dom';
-import { selectorArticles, selectorTags } from '@/store/slice/article';
-import { useSelector } from 'react-redux';
 export default function SideBar() {
-  const tagList = useSelector(selectorTags);
-  // let articleList = useSelector(selectorArticles);
-  // if (!articleList.length) {
     const { dataList: articleList } = useFetchList({
       withLoading: false,
       requestUrl: '/article/list',
@@ -19,9 +14,13 @@ export default function SideBar() {
         pageSize: 6
       }
     });
+
+    const { dataList: tagList } = useFetchList({
+      withLoading: false,
+      requestUrl: '/tag/list',
+      queryParams: {}
+    })
   // }
-  
-  
   return (
     <aside className="app-sidebar">
       <img src={SIDEBAR.avatar} className="side-avatar" />
@@ -50,7 +49,8 @@ export default function SideBar() {
       <div className='tag-list'>
         {tagList.map((tag, i) => (
           <Tag key={i} color={tag.color}>
-            <Link to={`/tags/${tag.name}`}>{tag.name}</Link>
+            {/* <Link to={`/tags/${tag.name}`}>{tag.name}</Link> */}
+            {tag.name}
           </Tag>
         ))}
       </div>

@@ -15,7 +15,7 @@ export class TagService {
   constructor(@Inject('Tag') private readonly tagModel: typeof Tag){}
   async getAll() {
     try {
-      const data = await this.tagModel.findAll({
+      const data = await this.tagModel.findAndCountAll({
         attributes: ['name', [fn('COUNT', col('name')), 'count']],
         group: 'name',
         where: {

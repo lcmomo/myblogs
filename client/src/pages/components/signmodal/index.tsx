@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Input, Button, Modal, FormItemProps, FormInstance } from 'antd';
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { useListener } from '@/hooks/usebus';
@@ -40,7 +39,7 @@ function FormItem(props: FormItemProps) {
 }
 
 
-function SignModal(props: SignModalProps | null) {
+function SignModal(props: any) {
   const dispatch = useDispatch();
   const location = useLocation();
   const [visible, setVisible] = useState(false);
@@ -64,6 +63,7 @@ const handleSubmit = useCallback((e) => {
       dispatch(action(values))
     }).then(() => {
       setVisible(false);
+      props.history.push('/');
     }).catch(err => {
     })
   }, [type]);
@@ -115,4 +115,4 @@ const handleSubmit = useCallback((e) => {
   )
 }
 
-export default SignModal;
+export default withRouter(SignModal);

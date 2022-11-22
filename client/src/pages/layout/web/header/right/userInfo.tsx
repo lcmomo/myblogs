@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Menu, Typography } from 'antd';
 
-import { Avatar, Popover, Typography } from 'antd';
 import MyAvatar from '@/pages/components/my_avatar';
 import useBus from '@/hooks/usebus';
 import SignModal from '@/pages/components/signmodal';
@@ -41,7 +40,8 @@ function UserInfo(props: any) {
   );
 
   const logoutCall = useCallback(() => {
-		dispatch(logout());
+    dispatch(logout());
+    props.history.push('/');
   }, [])
 
   const MenuOverLay = (
