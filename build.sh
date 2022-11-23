@@ -104,3 +104,57 @@ build_client
 build_server
 
 deploy_client
+
+
+# client
+
+echo "清理上次构建信息"
+JENKINS_WORKSPACE_NAME="workspace"
+LAST_WORK_DIR="${JENKINS_HOME}/${JENKINS_WORKSPACE_NAME}/${JOB_BASE_NAME}/myblogs"
+ITEM_NAME="myblogs"
+rm -rf ${LAST_WORK_DIR}/
+
+CURRENTDIR=`pwd`
+echo "下载代码开始.................."
+
+git clone https://github.com/lcmomo/myblogs.git
+
+
+echo "代码下载完成.................."
+
+cd $CURRENTDIR
+
+bash ./$ITEM_NAME/client/deploy.sh
+
+
+# server
+
+#!/bin/bash
+
+source /etc/profile #声明环境变量;
+
+
+echo "hello world";
+
+set -x;
+
+ITEM_NAME="myblogs"
+LAST_WORK_DIR="${JENKINS_HOME}/${JOB_BASE_NAME}/myblogs"
+
+echo "清理上次构建信息"
+rm -rf ${LAST_WORK_DIR}/
+
+
+echo "下载代码开始.................."
+
+git clone https://github.com/lcmomo/myblogs.git
+
+
+echo "代码下载完成.................."
+
+CURRENTDIR=`pwd`
+echo "aaa${CURRENTDIR}"
+
+cd $CURRENTDIR
+
+bash ./${ITEM_NAME}/server/deploy.sh
