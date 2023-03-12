@@ -90,7 +90,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.6.2",
-    "@wangeditor/editor": "^5.0.1",
+    "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-react": "^1.0.2",
     "@wangeditor/plugin-md": "^1.0.0",
     "antd": "^4.16.13",
