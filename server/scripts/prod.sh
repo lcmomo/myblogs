@@ -1,1 +1,1 @@
-nest build
+cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider nest build
