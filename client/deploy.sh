@@ -4,11 +4,11 @@ source /etc/profile #声明环境变量;
 
 
 set -x;
-
+git clone https://github.com/lcmomo/myblogs.git
 CURRENTDIR=`pwd`
 echo "aaa${CURRENTDIR}"
 
-CLIENT_BASE_DIR="/www/wwwroot/blog.llchaoblogs.work/blogs/myblogs/"
+CLIENT_BASE_DIR="/www/wwwroot/www.llchaoblogs.work/blogs/myblogs/"
 ITEM_NAME="myblogs"
 JENKINS_WORKSPACE_NAME="workspace"
 LAST_WORK_DIR="${JENKINS_HOME}/${JENKINS_WORKSPACE_NAME}/${JOB_BASE_NAME}/myblogs"
@@ -52,7 +52,7 @@ build_client() {
 deploy_client() {
   echo "部署client..............."
 
-	rm -rf $CLIENT_BASE_DIR/
+	rm -rf $CLIENT_BASE_DIR
    if [ ! -d "$CLIENT_BASE_DIR" ]; then
   		mkdir $CLIENT_BASE_DIR
 	fi

@@ -1,1 +1,1 @@
- cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --mode development --config config/webpack.config.js
+ cross-env NODE_ENV=development webpack-dev-server --mode development --config config/webpack.config.js
