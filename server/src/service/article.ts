@@ -133,7 +133,7 @@ export class ArticleService {
     try {
       const { title, content, tags = [], articleId } = article;
       const tagList = tags.map(t => ({ name: t, articleId }));
-      const result = await this.articleModel.update({title, content}, { where: { id: articleId }});
+      const result = await this.articleModel.update({title, content, updatedAt: Date.now()}, { where: { id: articleId }});
       await this.tagModel.destroy({where: { articleId }});
       await this.tagModel.bulkCreate(tagList);
       return ResultGenerator.genSuccessResult(200, '更新成功')
