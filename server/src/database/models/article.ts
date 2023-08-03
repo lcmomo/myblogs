@@ -43,6 +43,7 @@ class Article extends Model {
       return dayjs(_this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss');
     }
   })
+
   createdAt!: string;
   @Column({
     type: DataType.DATE,
@@ -58,7 +59,7 @@ class Article extends Model {
 
   @HasMany(() => Reply)
   replies!: Reply[];
-  
+
   @HasMany(() => Tag)
   tags!: Tag[]
 }
