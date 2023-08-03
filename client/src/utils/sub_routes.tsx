@@ -1,15 +1,12 @@
 import React from 'react'
-
 import { Route, RouteProps, Switch, Redirect, RouteComponentProps, RouteChildrenProps } from 'react-router-dom';
 import { get } from './storage';
 import { USER_ROLES } from '@/config';
 import { decodeToken } from './token';
 import { JwtPayload } from 'jsonwebtoken';
+
 // import createHistory from 'history/createHashHistory';
 // const history = createHistory();
-
-const currentUser  = (decodeToken(get('token')) as JwtPayload);
-const role  = currentUser?.role;
 
 export type MyRouteComponentProps = React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
 
@@ -45,13 +42,13 @@ const createFixRoute = (route: any, index: string) => {
 
 export const createBasicRoute = (route: RouteProps, index: string) => {    //  最基础的Router 用法
   const { path, component: Component } = route;
+  const currentUser  = (decodeToken(get('token')) as JwtPayload);
+  const role  = currentUser?.role;
+
+  if (path.includes('admin') && role !== USER_ROLES.ADMIN) {
+   return <Redirect to="/403" />
+  }
   return <Route exact key={index} path={path} component={(props: any)=> {
-    props.history.listen((path:  any)=> {    //  路由监听
-      const { pathname } = path;
-      if (pathname.includes('admin') && role !== USER_ROLES.ADMIN) {
-        props.history.push('/403');
-      }
-    });
     return <Component {...props} />;
   }} />;
 };
