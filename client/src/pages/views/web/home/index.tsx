@@ -7,7 +7,6 @@ import { HOME_PAGESIZE } from '@/utils/config';
 import useFetchList from '@/hooks/use_fetch_list';
 import { Empty, Spin } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setArticleList } from '@/store/slice/article';
 import QuickLink from './quick_link';
 import ArticleList from './list';
 import Pagination from '@/pages/components/pagination'

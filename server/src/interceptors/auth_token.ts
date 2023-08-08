@@ -10,7 +10,6 @@ export class AuthToken implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers['token'];
-    console.log('token: ', token, request.headers)
     if (token === undefined || token === null) {
       throw new HttpException({code: 401, msg: '未授权用户'}, 401);
       // return ResultGenerator.genFailResult(401, '身份过期')

@@ -64,8 +64,4 @@ class Article extends Model {
   tags!: Tag[]
 }
 
-
-
-
-
 export { Article };
