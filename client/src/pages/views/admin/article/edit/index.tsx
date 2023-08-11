@@ -121,7 +121,7 @@ const ArticleEdit: FC<ArticleEditProps> = (props: ArticleEditProps) => {
       >
         <MyIcon  type={ articleId ? 'icon-edit-square' : 'icon-plus-square' } />
       </Button>
-      {/* <BackTop target={() => document.querySelector('.admin-content-wrap')} /> */}
+      <BackTop target={() => document.querySelector('.admin-content-wrap') as HTMLElement} />
     </div>
   );
 }
