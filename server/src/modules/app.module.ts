@@ -12,11 +12,12 @@ import { CommentService } from '@/service/comment';
 import { CommentController } from '@/controller/comment';
 import { ReplyController } from '@/controller/reply';
 import { ReplyService } from '@/service/reply';
-
+import { CommonService } from '@/service/common';
+import { CommonController } from '@/controller/common';
 
 @Module({
   imports: [DataBaseModule],
-  controllers: [AppController, UserController, ArticleController, TagController, CommentController, ReplyController],
-  providers: [AppService, UserService, ArticleService, TagService, CommentService, ReplyService],
+  controllers: [AppController, UserController, ArticleController, TagController, CommentController, ReplyController, CommonController],
+  providers: [AppService, UserService, ArticleService, TagService, CommentService, ReplyService, CommonService],
 })
-export class AppModule {}
+export class AppModule  {}
