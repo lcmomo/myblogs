@@ -3,11 +3,12 @@ import React from 'react';
 
 import {
   // HashRouter as Router,
-  Router, RouteProps } from 'react-router-dom';
-import createHistory from 'history/createHashHistory';
-// import createBrowsers from 'history/createBrowserHistory';
-const history = createHistory();
-// const browserHistory = createBrowsers();
+  BrowserRouter  as Router,
+  RouteProps } from 'react-router-dom';
+// import createHistory from 'history/createHashHistory';
+import createBrowsers from 'history/createBrowserHistory';
+// const history = createHistory();
+const browserHistory = createBrowsers();
 import { createRoute } from '@/utils/sub_routes';
 const { lazy, Suspense } = React;
 
@@ -90,11 +91,11 @@ const routeConfig: RouteProps[] = [
         exact: true,
         component: About
       },
-      {
-        path: '*',
-        exact: true,
-        component: NotFound
-      },
+      // {
+      //   path: '*',
+      //   exact: true,
+      //   component: NotFound
+      // },
     ]
   },
 ];
@@ -105,7 +106,7 @@ const Routes = () => {
 
   return (
   <Suspense fallback={<div>loading...</div>}>
-    <Router history={history}>
+    <Router >
       {createRoute(routeConfig)}
   </Router>
   </Suspense>
