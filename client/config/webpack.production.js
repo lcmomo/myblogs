@@ -10,7 +10,7 @@ const publicPath = resolve(process.cwd(), 'dist');
 const webpackConfig = {
   output: {
     filename: '[name].[contenthash:5].js', // contenthash： 只有模块内容改变，才会改变hash
-    publicPath: publicPath,
+    publicPath: './',
     path: publicPath
   },
 
