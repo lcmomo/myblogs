@@ -8,7 +8,8 @@ const webpackConfig = {
   target:  "web",
   output: {
     filename: '[name].[hash:5].js',
-    // publicPath: './',
+    publicPath: '/',
+    path: resolve(process.cwd(), 'dist')
   },
 
   module: {

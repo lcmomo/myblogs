@@ -32,3 +32,7 @@ export const USER_ROLES = {
   ADMIN: 1,
   USER: 2
 }
+
+export const API = '/api';
+export const API_VERSION = '/v1';
+export const API_PATH = `${API}${API_VERSION}`;

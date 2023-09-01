@@ -8,6 +8,6 @@ export class CommonService {
   constructor(){}
   async catchAll(res: any) {
     console.log("egr")
-    res.sendFile(join(__dirname, '..', 'client', 'dist', 'index.html'));
+    res.sendFile(join(__dirname, '../../../', 'client', 'dist', 'index.html'));
   }
 }

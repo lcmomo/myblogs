@@ -1,9 +1,10 @@
+import { API_PATH } from '@/config';
 import { ArticleAddBody, ArticleListQueryParams } from '@/models/dto/article';
 import { ArticleService } from '@/service/article';
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors} from '@nestjs/common';
 import { AuthToken, AuthAdmin } from '../interceptors';
 
-@Controller('/article')
+@Controller(`${API_PATH}/article`)
 export class ArticleController{
   constructor(private articleService: ArticleService) {}
 

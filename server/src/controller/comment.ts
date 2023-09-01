@@ -1,11 +1,12 @@
 
+import { API_PATH } from '@/config';
 import { CommentDto } from '@/models/dto/comment';
 import { CommentService } from '@/service/comment';
 import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors} from '@nestjs/common';
 import { AuthToken } from '../interceptors/auth_token';
 
 
-@Controller('/comment')
+@Controller(`${API_PATH}/comment`)
 export class CommentController{
   constructor(private commentService: CommentService) {}
 
