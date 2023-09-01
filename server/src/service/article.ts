@@ -22,7 +22,7 @@ export class ArticleService {
     @Inject('Tag') private readonly tagModel: typeof Tag
   ){}
   async getAll(queryParams: ArticleListQueryParams) {
-
+console.log('dirname: ', __dirname)
     const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, order } = queryParams;
     const tagFilter = tag ? { name: tag } : undefined;
     let articleOrder: Order = [['createdAt', 'DESC']];

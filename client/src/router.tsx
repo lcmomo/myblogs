@@ -6,9 +6,9 @@ import {
   BrowserRouter  as Router,
   RouteProps } from 'react-router-dom';
 // import createHistory from 'history/createHashHistory';
-import createBrowsers from 'history/createBrowserHistory';
+// import * as history from 'history';
 // const history = createHistory();
-const browserHistory = createBrowsers();
+// const browserHistory = history.createBrowserHistory();
 import { createRoute } from '@/utils/sub_routes';
 const { lazy, Suspense } = React;
 

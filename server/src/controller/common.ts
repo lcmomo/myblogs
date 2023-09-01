@@ -1,5 +1,6 @@
 import { CommonService } from '@/service/common';
 import { Controller, Get,  Res } from '@nestjs/common';
+import { join } from 'path';
 
 
 @Controller('*')
@@ -8,6 +9,7 @@ export class CommonController{
 
   @Get()
   async catchAll(@Res() response: any) {
-    return await this.commonService.catchAll(response);
+    console.log("egr")
+    response.sendFile(join(__dirname, '../../../', 'client', 'dist', 'index.html'));
   }
 }

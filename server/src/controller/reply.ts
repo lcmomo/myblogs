@@ -1,10 +1,11 @@
 
+import { API_PATH } from '@/config';
 import { ReplyService } from '@/service/reply';
 import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors} from '@nestjs/common';
 
 
 
-@Controller('/reply')
+@Controller(`${API_PATH}/reply`)
 export class ReplyController{
   constructor(private replyService: ReplyService) {}
 

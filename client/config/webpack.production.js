@@ -6,11 +6,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const publicPath = resolve(process.cwd(), 'dist');
 const webpackConfig = {
   output: {
     filename: '[name].[contenthash:5].js', // contenthash： 只有模块内容改变，才会改变hash
-    // publicPath: './',
-    path: resolve(process.cwd(), 'dist')
+    publicPath: publicPath,
+    path: publicPath
   },
 
   module: {

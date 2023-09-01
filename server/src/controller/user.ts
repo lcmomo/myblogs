@@ -2,8 +2,9 @@ import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors} fro
 import { UserService } from '../service/user';
 import { UserDto, UserQueryParams } from '../models/dto/user';
 import { AuthToken, AuthAdmin } from '../interceptors';
+import { API_PATH } from '@/config';
 
-@Controller('/user')
+@Controller(`${API_PATH}/user`)
 export class UserController {
   constructor(private userService:  UserService) {}
 
