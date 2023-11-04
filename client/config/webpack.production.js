@@ -22,7 +22,7 @@ const webpackConfig = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          publicPath: 'assets/img',
+          publicPath: '/assets/img',
           name: '[name].[contenthash:5].[ext]'
         },
       },

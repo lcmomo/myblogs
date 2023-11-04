@@ -72,8 +72,8 @@ const webpackConfig = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          publicPath: 'assets/img',
-          outputPath: 'assets/img',
+          publicPath: '/assets/img',
+          outputPath: '/assets/img',
           name: '[name].[hash:5].[ext]'
         },
       },
