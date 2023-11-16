@@ -53,6 +53,12 @@ class User extends Model {
   github!: string;
 
   @Column({
+    type: DataType.STRING,
+    comment: '用户头像url'
+  })
+  avatar?: string;
+
+  @Column({
     type: DataType.DATE,
     defaultValue: DataType.NOW,
     get() {

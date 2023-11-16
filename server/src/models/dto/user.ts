@@ -8,7 +8,9 @@ export interface UserDto {
   role?: number;
   github?: string;
   code?: string | number;
-  account?: string
+  account?: string,
+  avatar?: string,
+  userId?: number
 }
 
 export interface UserQueryParams {

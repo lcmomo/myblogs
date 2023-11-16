@@ -75,6 +75,7 @@ export default async function request(url: string, options?: requestOptionsType,
     if (data.code === 401) {
       message.error(data && data.msg || 'Error!');
       remove('token'); // 身份过期，清空保存的token
+      return data;
     } else if (!data || data.code !== 200) {
       message.error(data && data.msg || 'Error!');
       return;

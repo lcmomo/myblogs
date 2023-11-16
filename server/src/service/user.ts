@@ -39,9 +39,9 @@ export class UserService {
         if (!isMatch) {
           return ResultGenerator.genFailResult(403, '密码不正确')
         } else {
-          const { id, role, username } = currentUser;
-          const token = createToken({username, userId: id, role });
-          return ResultGenerator.genSuccessResult({ username: currentUser.username, role, userId: id, token })
+          const { id, role, username, avatar } = currentUser;
+          const token = createToken({username, userId: id, role,avatar });
+          return ResultGenerator.genSuccessResult({ username: currentUser.username, role, userId: id, token, avatar })
         }
       }
     } catch(err) {
@@ -123,4 +123,29 @@ export class UserService {
   }
 
  }
-}
+
+ async updateAvatar(user: UserDto) {
+
+    try {
+      const { avatar, userId } = user;
+      const currentUser = await this.userModel.findOne({
+        where: {
+          id: userId
+        }
+      });
+      if (currentUser) {
+        await this.userModel.update({ avatar, updatedAt: Date.now()}, { where: { id: userId }});
+      }
+      const result = await this.userModel.findOne({
+        where: {
+          id: userId
+        }
+      });
+      return ResultGenerator.genSuccessResult(result, '更新成功')
+    } catch (e) {
+      return ResultGenerator.genFailResult(500, '服务端错误');
+    }
+  }
+
+
+ }

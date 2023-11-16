@@ -1,1 +1,1 @@
- nest start --watch
+ cross-env NODE_ENV=development nest start --watch
