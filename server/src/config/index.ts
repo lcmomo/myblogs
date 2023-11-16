@@ -1,3 +1,4 @@
+import { join } from "path";
 import { SequelizeOptions } from "sequelize-typescript";
 
 export const isDev: boolean = process.env.NODE_ENV === 'development';
@@ -36,3 +37,5 @@ export const USER_ROLES = {
 export const API = '/api';
 export const API_VERSION = '/v1';
 export const API_PATH = `${API}${API_VERSION}`;
+
+export const staticFileDir = isDev ? join(__dirname, '../upload'): join(process.cwd(), '../../../static-file/upload')

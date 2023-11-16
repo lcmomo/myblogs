@@ -8,7 +8,8 @@ export interface UserInfo {
   username: string;
   role: number;
   userId: number;
-  github?: any
+  github?: any,
+  avatar?: string
 }
 interface UserState {
   userInfo: UserInfo
@@ -59,7 +60,7 @@ export const login = (loginInfo: LoginInfo) => async (dispatch: AppDispatch) => 
     const data = await loginI(loginInfo);
     if (data) {
       save('token', data.token);
-      dispatch(setUserInfo(decodeToken(data.token) as UserInfo));
+      dispatch(setUserInfo( {  ...data , ...decodeToken(data.token) } as UserInfo));
     }
   } catch(err) {
     throw err;

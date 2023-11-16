@@ -3,7 +3,7 @@ import { Article } from './article';
 import { Comment } from './comment';
 import { Reply } from './reply';
 import { Tag } from './tag';
-
+import { File } from './file';
 
 // const initModels = (sequelize: Sequelize): void => {
 //  userModel(sequelize);
@@ -27,4 +27,4 @@ import { Tag } from './tag';
  *
  */
 
-export { User, Comment, Article, Reply, Tag };
+export { User, Comment, Article, Reply, Tag, File };

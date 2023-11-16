@@ -6,12 +6,11 @@ import { Button, Dropdown, Menu, Typography } from 'antd';
 import MyAvatar from '@/pages/components/my_avatar';
 import useBus from '@/hooks/usebus';
 import SignModal from '@/pages/components/signmodal';
-import { logout } from '@/store/slice/user';
+import { logout, setUserInfo } from '@/store/slice/user';
 import { RootState } from '@/store';
 import { USER_ROLES } from '@/config';
-// import { DISCUSS_AVATAR } from '@/config';
+import MyUpload from '@/pages/components/upload';
 
-// import { userInfoProp } from '@/type';
 
 const { Text } = Typography;
 // interface userInfoProp  {
@@ -24,7 +23,7 @@ function UserInfo(props: any) {
   const bus = useBus();
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
 
-  const { username, github, role } = userInfo;
+  const { username, github, role, userId } = userInfo;
 
   const loginCall = useCallback(
     () => {
@@ -42,7 +41,14 @@ function UserInfo(props: any) {
   const logoutCall = useCallback(() => {
     dispatch(logout());
     props.history.push('/');
-  }, [])
+  }, []);
+
+  const updateAvatar = useCallback(
+    (newUser) => {
+     dispatch(setUserInfo({...userInfo, avatar: newUser.avatar}))
+    },
+    []
+  )
 
   const MenuOverLay = (
     <Menu>
@@ -56,6 +62,13 @@ function UserInfo(props: any) {
           <span onClick={e => props.history.push('/admin')}>后台管理</span>
         </Menu.Item>
       )}
+      {
+        username && (
+          <Menu.Item key="uploadAvatar">
+          <MyUpload userInfo={userInfo} updateAvatar={updateAvatar} buttonText="编辑头像" />
+        </Menu.Item>
+        )
+      }
       <Menu.Item key="webLogout">
         <span className='user-logout' onClick={logoutCall}>
           退出登录

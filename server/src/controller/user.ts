@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors} from '@nestjs/common';
 import { UserService } from '../service/user';
 import { UserDto, UserQueryParams } from '../models/dto/user';
 import { AuthToken, AuthAdmin } from '../interceptors';
@@ -39,4 +39,11 @@ export class UserController {
   async delete(@Param('id') userId: number) {
     return await this.userService.delete(userId);
   }
+  
+  @Put('update-avatar')
+  @UseInterceptors(AuthToken)
+  async updateAvatar(@Body() user: UserDto) {
+    return await this.userService.updateAvatar(user);
+  }
+
 }

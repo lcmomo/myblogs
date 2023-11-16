@@ -12,12 +12,15 @@ import { CommentService } from '@/service/comment';
 import { CommentController } from '@/controller/comment';
 import { ReplyController } from '@/controller/reply';
 import { ReplyService } from '@/service/reply';
-import { CommonService } from '@/service/common';
+import { DefaultService } from '@/service/default';
+import { DefaultController } from '@/controller/default';
 import { CommonController } from '@/controller/common';
+import { CommonService } from '@/service/common';
+// import { FileUploadModule } from './common';
 
 @Module({
   imports: [DataBaseModule],
   controllers: [AppController, UserController, ArticleController, TagController, CommentController, ReplyController, CommonController],
-  providers: [AppService, UserService, ArticleService, TagService, CommentService, ReplyService, CommonService],
+  providers: [AppService, UserService, ArticleService, TagService, CommentService, ReplyService, DefaultService, CommonService],
 })
 export class AppModule  {}

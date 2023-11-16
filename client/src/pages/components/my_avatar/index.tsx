@@ -3,20 +3,24 @@ import '../my_avatar/style.less';
 import { Avatar, Popover, Typography } from 'antd';
 import Href from '../href';
 
-import { DISCUSS_AVATAR } from '../../../config';
+import { API_BASE_URL, DISCUSS_AVATAR } from '../../../config';
 import MyIcon from '../my_icon';
 const { Text, Title } = Typography;
 
 function AvatarComponent(props: any) {
-  const { github, username, role } = props;
+  const { github, username, role, avatar } = props;
   let avatarSrc = '';
   if (github && github.avatar_url) avatarSrc = github.avatar_url;
+  if (avatar) {
+    const baseDownloadAvatar = `${API_BASE_URL}/common/download`;
+    avatarSrc = `${baseDownloadAvatar}/${avatar}`;
+  }
   if (role === 1) avatarSrc = DISCUSS_AVATAR;
   return <Avatar src={avatarSrc}>{username}</Avatar>;
 }
 
 function AppAvatar(props: any) {
-  const { role, username, github } = props.userInfo;
+  const { role, username, github, avatar } = props.userInfo;
   if (github && props.popoverVisible) {
     return (
       <Popover
@@ -68,12 +72,12 @@ function AppAvatar(props: any) {
             </ul>
           </div>
         }>
-        <AvatarComponent role={role} github={github} username={username} />
+        <AvatarComponent role={role} github={github} username={username} avatar={avatar} />
         <span />
       </Popover>
     )
   } else {
-    return <AvatarComponent role={role} github={github} username={username} />
+    return <AvatarComponent role={role} github={github} username={username} avatar={avatar} />
   }
 }
 
