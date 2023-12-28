@@ -24,7 +24,7 @@ export const HEADER_BLOG_NAME = '夙兮执梦';
 
 
 // API_BASE_URL
-export const API_BASE_URL = process.env.NODE_ENV === 'development' ? `http://localhost:3002${API_PATH}` : `http://blog.llchaoblogs.work:3002${API_PATH}`;
+export const API_BASE_URL = process.env.NODE_ENV === 'development' ? `http://localhost:3002${API_PATH}` : `http://localhost:3002${API_PATH}`;
 
 const AVATAR_IMG = ''
 
