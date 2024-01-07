@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "scripty",
-    "start": "scripty",
-    "build": "scripty",
+    "start": "bash ./scripts/start.sh",
+    "build": "bash ./scripts/build.sh",
     "lint": "eslint src --ext .ts,.tsx,.js,jsx --no-error-on-unmatched-pattern",
     "lint:e": "eslint src --ext .ts,.tsx,.js,jsx"
   },
