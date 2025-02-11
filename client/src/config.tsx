@@ -21,12 +21,12 @@ interface SideBarProps {
 }
 // import AvatarImg from '@/assets/img/logo.png';
 export const HEADER_BLOG_NAME = '夙兮执梦';
-
+export const isDev: boolean = process.env.NODE_ENV === 'development';
 const { protocol, hostname } = location;
 const API_PORT = '80';
 const HOST_NAME = `${protocol}//${hostname}:${API_PORT}`;
 // API_BASE_URL
-export const API_BASE_URL = `${HOST_NAME}${API_PATH}`;
+export const API_BASE_URL = isDev ? `http://localhost:3002${API_PATH}` :  `${HOST_NAME}${API_PATH}`;
 const AVATAR_IMG = ''
 
 // === sidebar
